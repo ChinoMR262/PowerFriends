@@ -1,0 +1,38 @@
+[
+  {
+    "nombre": "Chino",
+    "lineas": ["Bot", "Jungla", "Top"]
+  },
+  {
+    "nombre": "Fede",
+    "lineas": ["Medio", "Top"]
+  },
+  {
+    "nombre": "Geral",
+    "lineas": ["Sup", "Medio"]
+  },
+  {
+    "nombre": "Sarita",
+    "lineas": ["Top", "Jungla"]
+  },
+  {
+    "nombre": "Yahiko",
+    "lineas": ["Bot", "Jungla"]
+  },
+  {
+    "nombre": "Mar",
+    "lineas": ["Sup", "Bot"]
+  },
+  {
+    "nombre": "Maira",
+    "lineas": ["Medio", "Sup"]
+  },
+  {
+    "nombre": "Luci",
+    "lineas": ["Top", "Jungla"]
+  },
+  {
+    "nombre": "David",
+    "lineas": ["Top", "Sup"]
+  }
+]

@@ -1,0 +1,90 @@
+/* Estilos generales para el cuerpo de la página */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 20px;
+    line-height: 1.6;
+}
+
+/* Estilos para los títulos principales */
+h1, h2 {
+    color: #007bff;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Estilos para el contenedor de la lista de jugadores */
+#lista-jugadores {
+    display: grid;
+    /* Crea un diseño de cuadrícula con columnas flexibles */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* Estilos para cada tarjeta de jugador */
+.jugador {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Transición suave para los efectos de animación */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+    text-align: center;
+}
+
+/* Animación al pasar el ratón sobre la tarjeta */
+.jugador:hover {
+    transform: translateY(-5px) scale(1.03); /* Eleva y agranda ligeramente */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para el nombre del jugador */
+.jugador h3 {
+    color: #0056b3;
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+/* Estilos para el texto de las líneas */
+.jugador p {
+    margin-top: 0;
+    margin-bottom: 0;
+    color: #666;
+}
+
+.jugador p strong {
+    color: #333;
+    font-weight: bold;
+}
+
+/* Animación de aparición para las tarjetas */
+.jugador {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.6s forwards;
+}
+
+/* El keyframes de la animación */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Retraso de la animación para que las tarjetas aparezcan una tras otra */
+.jugador:nth-child(1) { animation-delay: 0.1s; }
+.jugador:nth-child(2) { animation-delay: 0.2s; }
+.jugador:nth-child(3) { animation-delay: 0.3s; }
+.jugador:nth-child(4) { animation-delay: 0.4s; }
+.jugador:nth-child(5) { animation-delay: 0.5s; }
+.jugador:nth-child(6) { animation-delay: 0.6s; }
+.jugador:nth-child(7) { animation-delay: 0.7s; }
+.jugador:nth-child(8) { animation-delay: 0.8s; }
+.jugador:nth-child(9) { animation-delay: 0.9s; }
