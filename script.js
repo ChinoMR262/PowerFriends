@@ -4,19 +4,22 @@ const jugadoresJSON = 'jugadores.json';
 // Aquí obtendremos el div donde pondremos la lista de jugadores
 const contenedorJugadores = document.getElementById('lista-jugadores');
 
-// Función para obtener el ícono de la línea
-function obtenerIconoLinea(linea) {
-    switch (linea.toLowerCase()) {
-        case 'bot':
-            return '<i class="fas fa-arrow-down" title="Bot Lane"></i>';
+// Función para obtener el ícono del rol
+function obtenerIconoRol(rol) {
+    switch (rol.toLowerCase()) {
         case 'jungla':
-            return '<i class="fas fa-leaf" title="Jungle"></i>';
-        case 'top':
-            return '<i class="fas fa-arrow-up" title="Top Lane"></i>';
-        case 'medio':
-            return '<i class="fas fa-crosshairs" title="Mid Lane"></i>';
+            return '<i class="ri-forest-fill" title="Jungla"></i>';
+        case 'tirador':
+        case 'bot': // Para los que aún usan "Bot"
+            return '<i class="ri-crosshair-line" title="Tirador"></i>';
+        case 'mago':
+        case 'medio': // Para los que aún usan "Medio"
+            return '<i class="ri-magic-line" title="Mago"></i>';
         case 'sup':
-            return '<i class="fas fa-shield-alt" title="Support"></i>';
+            return '<i class="ri-hand-heart-line" title="Soporte"></i>';
+        case 'tanque':
+        case 'top': // Para los que aún usan "Top"
+            return '<i class="ri-shield-line" title="Tanque"></i>';
         default:
             return '';
     }
@@ -31,26 +34,21 @@ fetch(jugadoresJSON)
         return response.json();
     })
     .then(jugadores => {
-        // Por cada jugador que encontramos en la lista...
         jugadores.forEach(jugador => {
-            // ...creamos un nuevo elemento para mostrar su información
             const jugadorDiv = document.createElement('div');
             jugadorDiv.classList.add('jugador');
 
-            // Creamos los íconos para cada línea del jugador
-            const lineasHTML = jugador.lineas.map(linea => obtenerIconoLinea(linea)).join('');
+            const lineasHTML = jugador.lineas.map(linea => obtenerIconoRol(linea)).join('');
 
-            // Y dentro de ese elemento, ponemos su nombre y sus líneas
             jugadorDiv.innerHTML = `
                 <h3>${jugador.nombre}</h3>
-                <p><strong>Líneas:</strong> ${lineasHTML}</p>
+                <p><strong>Roles:</strong> ${lineasHTML}</p>
             `;
 
-            // Finalmente, agregamos este nuevo elemento al contenedor en el HTML
             contenedorJugadores.appendChild(jugadorDiv);
         });
     })
     .catch(error => {
         console.error('Error al cargar los datos:', error);
-        contenedorJugadores.innerHTML = '<p>Lo sentimos, no se pudo cargar la lista de jugadores. Por favor, revisa que el archivo jugadores.json exista y esté bien escrito.</p>';
+        contenedorJugadores.innerHTML = '<p>Lo sentimos, no se pudo cargar la lista de jugadores.</p>';
     });
