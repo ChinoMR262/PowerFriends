@@ -4,22 +4,52 @@ const jugadoresJSON = 'jugadores.json';
 // Aquí obtendremos el div donde pondremos la lista de jugadores
 const contenedorJugadores = document.getElementById('lista-jugadores');
 
+// Obtenemos el botón para cambiar el modo oscuro
+const darkModeToggle = document.getElementById('dark-mode-toggle');
+
+// Función para guardar y cargar la preferencia del modo oscuro
+function toggleDarkMode() {
+    // Alterna la clase 'dark-mode' en el body
+    document.body.classList.toggle('dark-mode');
+    
+    // Guarda la preferencia en el almacenamiento local del navegador
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDarkMode);
+}
+
+// Carga la preferencia guardada al iniciar la página
+function loadDarkModePreference() {
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+    }
+}
+
+// Llama a la función de carga al iniciar la página
+loadDarkModePreference();
+
+// Añade un 'event listener' al botón para cambiar el modo oscuro al hacer clic
+darkModeToggle.addEventListener('click', toggleDarkMode);
+
+
 // Función para obtener el ícono del rol
 function obtenerIconoRol(rol) {
     switch (rol.toLowerCase()) {
         case 'jungla':
-            return '<i class="ri-forest-fill" title="Jungla"></i>';
+            return '<i class="ri-knife-line" title="Jungla"></i>'; // Daga
         case 'tirador':
+        case 'adc':
         case 'bot':
-            return '<i class="ri-crosshair-line" title="Tirador"></i>';
+            return '<i class="ri-pistol-line" title="Tirador"></i>'; // Pistola
         case 'mago':
+        case 'mid':
         case 'medio':
-            return '<i class="ri-magic-line" title="Mago"></i>';
+            return '<i class="ri-sparkle-fill" title="Mago"></i>'; // Magia
         case 'sup':
-            return '<i class="ri-hand-heart-line" title="Soporte"></i>';
+            return '<i class="ri-plant-fill" title="Soporte"></i>'; // Planta
         case 'tanque':
         case 'top':
-            return '<i class="ri-shield-line" title="Tanque"></i>';
+            return '<i class="ri-shield-line" title="Tanque"></i>'; // Escudo
         default:
             return '';
     }
@@ -57,3 +87,4 @@ fetch(jugadoresJSON)
         console.error('Error al cargar los datos:', error);
         contenedorJugadores.innerHTML = '<p>Lo sentimos, no se pudo cargar la lista de jugadores. Por favor, revisa que el archivo jugadores.json exista y esté bien escrito.</p>';
     });
+

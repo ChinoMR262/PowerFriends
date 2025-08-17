@@ -281,7 +281,7 @@ body.dark-mode .jugador p i:hover {
     100% { transform: scale(1); }
 }
 
-/* Estilo adicional para el botón de modo oscuro (se agregará al HTML) */
+/* Estilo adicional para el botón de modo oscuro (se agregó al HTML) */
 .dark-mode-toggle {
     position: fixed;
     top: 20px;

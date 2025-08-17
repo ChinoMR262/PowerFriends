@@ -1,15 +1,15 @@
 [
   {
     "nombre": "Chino",
-    "lineas": ["Bot", "Jungla", "Top"]
+    "lineas": ["Adc", "Jungla", "Top"]
   },
   {
     "nombre": "Fede",
     "lineas": ["Medio", "Top"]
   },
   {
-    "nombre": "Geral",
-    "lineas": ["Sup", "Medio"]
+    "nombre": "Mar",
+    "lineas": ["Sup", "Adc"]
   },
   {
     "nombre": "Sarita",
@@ -17,11 +17,11 @@
   },
   {
     "nombre": "Yahiko",
-    "lineas": ["Bot", "Jungla"]
+    "lineas": ["Adc", "Jungla"]
   },
   {
-    "nombre": "Mar",
-    "lineas": ["Sup", "Bot"]
+    "nombre": "Geral",
+    "lineas": ["Sup", "Medio"]
   },
   {
     "nombre": "Maira",
