@@ -4,21 +4,34 @@
 /* Estilos generales para el cuerpo de la página */
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #F8F8FF; /* Blanco roto como fondo */
-    color: #363636; /* Gris oscuro para el texto */
+    background-color: #f5f5f5; /* Fondo modo claro */
+    color: #333; /* Texto modo claro */
     margin: 0;
     padding: 0;
     line-height: 1.6;
     min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Clases para el modo oscuro */
+body.dark-mode {
+    background-color: #121212; /* Fondo modo oscuro */
+    color: #f8f8f8; /* Texto modo oscuro */
 }
 
 /* Estilos para el encabezado principal */
 header {
     text-align: center;
     padding: 80px 20px;
-    background-color: #6495ED; /* Azul vibrante para el header */
-    color: #ffffff;
+    background-color: #FF69B4; /* Acento modo claro */
+    color: #fff;
     margin-bottom: 40px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode header {
+    background-color: #FF4081; /* Acento modo oscuro */
+    color: #1e1e1e;
 }
 
 header h1 {
@@ -29,6 +42,14 @@ header h1 {
     letter-spacing: 3px;
     text-transform: uppercase;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, text-shadow 0.2s ease-in-out;
+    animation: pulse 2s infinite alternate;
+}
+
+header h1:hover {
+    transform: scale(1.05);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
 }
 
 header p {
@@ -37,7 +58,12 @@ header p {
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
-    color: #e0f2f7; /* Un tono más claro para el texto del header */
+    color: #e0f2f7; /* Un tono más claro para el texto del header en modo claro */
+    transition: color 0.3s ease;
+}
+
+body.dark-mode header p {
+    color: #b0bec5; /* Un tono más oscuro para el texto del header en modo oscuro */
 }
 
 /* Contenedor principal de la página */
@@ -49,13 +75,18 @@ main {
 
 /* Estilos para los títulos secundarios */
 h2 {
-    color: #363636;
+    color: #333; /* Texto h2 modo claro */
     text-align: center;
     margin-top: 40px;
     margin-bottom: 30px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
     font-size: 2.5em;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode h2 {
+    color: #f8f8f8; /* Texto h2 modo oscuro */
 }
 
 /* Contenedor de la lista de jugadores */
@@ -67,12 +98,12 @@ h2 {
 
 /* Estilos para cada tarjeta de jugador */
 .jugador {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0; /* Borde sutil */
+    background-color: #fff; /* Tarjetas modo claro */
+    border: 1px solid #eee; /* Borde modo claro */
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease, color 0.3s ease;
     cursor: pointer;
     text-align: center;
     position: relative;
@@ -83,6 +114,12 @@ h2 {
     align-items: center;
 }
 
+body.dark-mode .jugador {
+    background-color: #1e1e1e; /* Tarjetas modo oscuro */
+    border: 1px solid #333; /* Borde modo oscuro */
+    color: #f8f8f8;
+}
+
 .jugador::before {
     content: '';
     position: absolute;
@@ -90,10 +127,14 @@ h2 {
     left: 0;
     width: 100%;
     height: 5px;
-    background: linear-gradient(90deg, #FFB6C1, #FF8C00); /* Degradado rosa a naranja */
-    transition: transform 0.3s ease-in-out;
+    background: linear-gradient(90deg, #FF69B4, #00BFFF); /* Degradado modo claro */
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease;
     transform: scaleX(0);
     transform-origin: left;
+}
+
+body.dark-mode .jugador::before {
+    background: linear-gradient(90deg, #FF4081, #40C4FF); /* Degradado modo oscuro */
 }
 
 .jugador:hover::before {
@@ -103,48 +144,75 @@ h2 {
 .jugador:hover {
     transform: translateY(-5px) scale(1.02);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    border-color: #FFB6C1;
+    border-color: #FF69B4;
+}
+
+body.dark-mode .jugador:hover {
+    border-color: #FF4081;
 }
 
 .jugador h3 {
-    color: #363636;
+    color: #333; /* Texto h3 modo claro */
     margin-top: 0;
     margin-bottom: 10px;
     font-size: 1.6em;
     font-weight: 700;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .jugador h3 {
+    color: #f8f8f8; /* Texto h3 modo oscuro */
 }
 
 .jugador p {
     margin: 0;
-    color: #777;
+    color: #777; /* Texto p modo claro */
     font-size: 1em;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .jugador p {
+    color: #b0bec5; /* Texto p modo oscuro */
 }
 
 .jugador p strong {
-    color: #363636;
+    color: #333; /* Texto strong modo claro */
     font-weight: 700;
     display: block;
     margin-bottom: 5px;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .jugador p strong {
+    color: #f8f8f8; /* Texto strong modo oscuro */
 }
 
 /* Estilos para los íconos de línea */
 .jugador p i {
     font-size: 1.6em;
     margin: 0 8px;
-    color: #FF8C00; /* Iconos en naranja */
+    color: #00BFFF; /* Iconos modo claro */
     transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+body.dark-mode .jugador p i {
+    color: #40C4FF; /* Iconos modo oscuro */
 }
 
 .jugador p i:hover {
     transform: scale(1.2);
-    color: #FFB6C1; /* Cambio de color al pasar el ratón */
+    color: #FF69B4;
+}
+
+body.dark-mode .jugador p i:hover {
+    color: #FF4081;
 }
 
 /* Animación de aparición para las tarjetas */
 .jugador {
     opacity: 0;
     transform: translateY(20px);
-    animation: fadeIn 0.8s forwards;
+    animation: fadeIn 0.6s forwards; /* Reduje un poco la duración */
 }
 
 @keyframes fadeIn {
@@ -195,45 +263,7 @@ h2 {
         margin: 0 5px;
     }
 }
-    
-.jugador:nth-child(1) { animation-delay: 0.1s; }
-.jugador:nth-child(2) { animation-delay: 0.2s; }
-.jugador:nth-child(3) { animation-delay: 0.3s; }
-.jugador:nth-child(4) { animation-delay: 0.4s; }
-.jugador:nth-child(5) { animation-delay: 0.5s; }
-.jugador:nth-child(6) { animation-delay: 0.6s; }
-.jugador:nth-child(7) { animation-delay: 0.7s; }
-.jugador:nth-child(8) { animation-delay: 0.8s; }
-.jugador:nth-child(9) { animation-delay: 0.9s; }
-    
-/* Animaciones sutiles para los iconos */
-.jugador p i {
-    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
-}
 
-.jugador p i:hover {
-    transform: scale(1.2);
-    color: #FFB6C1;
-}
-    
-/* Ajuste de la animación de entrada para que sea más suave */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-    
-.jugador {
-    animation-duration: 0.6s;
-    animation-timing-function: ease-out;
-}
-    
-/* Retrasos de animación ajustados */
 .jugador:nth-child(1) { animation-delay: 0.05s; }
 .jugador:nth-child(2) { animation-delay: 0.1s; }
 .jugador:nth-child(3) { animation-delay: 0.15s; }
@@ -243,31 +273,32 @@ h2 {
 .jugador:nth-child(7) { animation-delay: 0.35s; }
 .jugador:nth-child(8) { animation-delay: 0.4s; }
 .jugador:nth-child(9) { animation-delay: 0.45s; }
-    
-/* Estilo adicional para el título principal */
-header h1 {
-    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+
+/* Animación de pulso para el título */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
 }
 
-/* Ajuste del margen inferior del encabezado para pantallas pequeñas */
-@media (max-width: 600px) {
-    header {
-        margin-bottom: 30px;
-    }
-}
-    
-/* Suavizando la transición del hover en las tarjetas */
-.jugador {
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out;
+/* Estilo adicional para el botón de modo oscuro (se agregará al HTML) */
+.dark-mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 1.5em;
+    outline: none;
+    transition: color 0.3s ease;
 }
 
-.jugador:hover {
-    transform: translateY(-3px) scale(1.01);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+body.dark-mode .dark-mode-toggle {
+    color: #f8f8f8;
 }
-    
-/* Animación de la barra superior más sutil */
-.jugador::before {
-    height: 4px;
-    background: linear-gradient(90deg, #FF4081, #E040FB); /* Tonos rosas y morados */
+
+.dark-mode-toggle i {
+    display: block;
 }

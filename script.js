@@ -10,15 +10,15 @@ function obtenerIconoRol(rol) {
         case 'jungla':
             return '<i class="ri-forest-fill" title="Jungla"></i>';
         case 'tirador':
-        case 'bot': // Para los que aún usan "Bot"
+        case 'bot':
             return '<i class="ri-crosshair-line" title="Tirador"></i>';
         case 'mago':
-        case 'medio': // Para los que aún usan "Medio"
+        case 'medio':
             return '<i class="ri-magic-line" title="Mago"></i>';
         case 'sup':
             return '<i class="ri-hand-heart-line" title="Soporte"></i>';
         case 'tanque':
-        case 'top': // Para los que aún usan "Top"
+        case 'top':
             return '<i class="ri-shield-line" title="Tanque"></i>';
         default:
             return '';
@@ -34,21 +34,26 @@ fetch(jugadoresJSON)
         return response.json();
     })
     .then(jugadores => {
+        // Por cada jugador que encontramos en la lista...
         jugadores.forEach(jugador => {
+            // ...creamos un nuevo elemento para mostrar su información
             const jugadorDiv = document.createElement('div');
             jugadorDiv.classList.add('jugador');
 
+            // Creamos los íconos para cada línea del jugador
             const lineasHTML = jugador.lineas.map(linea => obtenerIconoRol(linea)).join('');
 
+            // Y dentro de ese elemento, ponemos su nombre y sus líneas
             jugadorDiv.innerHTML = `
                 <h3>${jugador.nombre}</h3>
                 <p><strong>Roles:</strong> ${lineasHTML}</p>
             `;
 
+            // Finalmente, agregamos este nuevo elemento al contenedor en el HTML
             contenedorJugadores.appendChild(jugadorDiv);
         });
     })
     .catch(error => {
         console.error('Error al cargar los datos:', error);
-        contenedorJugadores.innerHTML = '<p>Lo sentimos, no se pudo cargar la lista de jugadores.</p>';
+        contenedorJugadores.innerHTML = '<p>Lo sentimos, no se pudo cargar la lista de jugadores. Por favor, revisa que el archivo jugadores.json exista y esté bien escrito.</p>';
     });
