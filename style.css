@@ -4,29 +4,27 @@
 /* Estilos generales para el cuerpo de la página */
 body {
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #f0f2f5 0%, #e1e6ea 100%); /* Degradado sutil como fondo */
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    color: #34495e;
+    background-color: #F8F8FF; /* Blanco roto como fondo */
+    color: #363636; /* Gris oscuro para el texto */
     margin: 0;
     padding: 0;
     line-height: 1.6;
-    min-height: 100vh; /* Asegura que el fondo cubra toda la altura de la ventana */
+    min-height: 100vh;
 }
 
 /* Estilos para el encabezado principal */
 header {
     text-align: center;
-    padding: 80px 20px; /* Aumenta el padding vertical para un título más prominente */
-    background-color: #2c3e50;
+    padding: 80px 20px;
+    background-color: #6495ED; /* Azul vibrante para el header */
     color: #ffffff;
-    margin-bottom: 60px; /* Aumenta el margen inferior para más espacio */
+    margin-bottom: 40px;
 }
 
 header h1 {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: 4.0em; /* Título aún más grande */
+    font-size: 3.5em;
     margin: 0;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -39,6 +37,7 @@ header p {
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
+    color: #e0f2f7; /* Un tono más claro para el texto del header */
 }
 
 /* Contenedor principal de la página */
@@ -50,7 +49,7 @@ main {
 
 /* Estilos para los títulos secundarios */
 h2 {
-    color: #34495e;
+    color: #363636;
     text-align: center;
     margin-top: 40px;
     margin-bottom: 30px;
@@ -69,11 +68,11 @@ h2 {
 /* Estilos para cada tarjeta de jugador */
 .jugador {
     background-color: #ffffff;
-    border: none;
+    border: 1px solid #e0e0e0; /* Borde sutil */
     padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
     cursor: pointer;
     text-align: center;
     position: relative;
@@ -90,8 +89,8 @@ h2 {
     top: 0;
     left: 0;
     width: 100%;
-    height: 6px;
-    background: linear-gradient(90deg, #3498db, #2980b9);
+    height: 5px;
+    background: linear-gradient(90deg, #FFB6C1, #FF8C00); /* Degradado rosa a naranja */
     transition: transform 0.3s ease-in-out;
     transform: scaleX(0);
     transform-origin: left;
@@ -102,28 +101,27 @@ h2 {
 }
 
 .jugador:hover {
-    transform: translateY(-8px) scale(1.03);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-color: #FFB6C1;
 }
 
-/* Estilos para el nombre del jugador */
 .jugador h3 {
-    color: #2c3e50;
+    color: #363636;
     margin-top: 0;
     margin-bottom: 10px;
-    font-size: 1.8em;
+    font-size: 1.6em;
     font-weight: 700;
 }
 
-/* Estilos para el texto de las líneas */
 .jugador p {
     margin: 0;
-    color: #7f8c8d;
+    color: #777;
     font-size: 1em;
 }
 
 .jugador p strong {
-    color: #34495e;
+    color: #363636;
     font-weight: 700;
     display: block;
     margin-bottom: 5px;
@@ -131,21 +129,21 @@ h2 {
 
 /* Estilos para los íconos de línea */
 .jugador p i {
-    font-size: 1.8em;
-    margin: 0 10px;
-    color: #3498db;
+    font-size: 1.6em;
+    margin: 0 8px;
+    color: #FF8C00; /* Iconos en naranja */
     transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 .jugador p i:hover {
     transform: scale(1.2);
-    color: #2980b9;
+    color: #FFB6C1; /* Cambio de color al pasar el ratón */
 }
 
 /* Animación de aparición para las tarjetas */
 .jugador {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
     animation: fadeIn 0.8s forwards;
 }
 
@@ -156,6 +154,48 @@ h2 {
     }
 }
 
+/* Media Queries para diseño adaptable */
+@media (max-width: 768px) {
+    #lista-jugadores {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    header {
+        padding: 60px 15px;
+    }
+
+    header h1 {
+        font-size: 2.8em;
+    }
+
+    header p {
+        font-size: 1em;
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 480px) {
+    #lista-jugadores {
+        grid-template-columns: 1fr; /* Una sola columna en pantallas muy pequeñas */
+    }
+
+    .jugador {
+        padding: 20px;
+    }
+
+    .jugador h3 {
+        font-size: 1.4em;
+    }
+
+    .jugador p i {
+        font-size: 1.4em;
+        margin: 0 5px;
+    }
+}
+    
 .jugador:nth-child(1) { animation-delay: 0.1s; }
 .jugador:nth-child(2) { animation-delay: 0.2s; }
 .jugador:nth-child(3) { animation-delay: 0.3s; }
@@ -165,3 +205,69 @@ h2 {
 .jugador:nth-child(7) { animation-delay: 0.7s; }
 .jugador:nth-child(8) { animation-delay: 0.8s; }
 .jugador:nth-child(9) { animation-delay: 0.9s; }
+    
+/* Animaciones sutiles para los iconos */
+.jugador p i {
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.jugador p i:hover {
+    transform: scale(1.2);
+    color: #FFB6C1;
+}
+    
+/* Ajuste de la animación de entrada para que sea más suave */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+    
+.jugador {
+    animation-duration: 0.6s;
+    animation-timing-function: ease-out;
+}
+    
+/* Retrasos de animación ajustados */
+.jugador:nth-child(1) { animation-delay: 0.05s; }
+.jugador:nth-child(2) { animation-delay: 0.1s; }
+.jugador:nth-child(3) { animation-delay: 0.15s; }
+.jugador:nth-child(4) { animation-delay: 0.2s; }
+.jugador:nth-child(5) { animation-delay: 0.25s; }
+.jugador:nth-child(6) { animation-delay: 0.3s; }
+.jugador:nth-child(7) { animation-delay: 0.35s; }
+.jugador:nth-child(8) { animation-delay: 0.4s; }
+.jugador:nth-child(9) { animation-delay: 0.45s; }
+    
+/* Estilo adicional para el título principal */
+header h1 {
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+}
+
+/* Ajuste del margen inferior del encabezado para pantallas pequeñas */
+@media (max-width: 600px) {
+    header {
+        margin-bottom: 30px;
+    }
+}
+    
+/* Suavizando la transición del hover en las tarjetas */
+.jugador {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.jugador:hover {
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+    
+/* Animación de la barra superior más sutil */
+.jugador::before {
+    height: 4px;
+    background: linear-gradient(90deg, #FF4081, #E040FB); /* Tonos rosas y morados */
+}
