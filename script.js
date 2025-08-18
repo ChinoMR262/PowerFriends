@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalImageContainer = document.getElementById('modal-image-container');
     const modalTitle = document.getElementById('modal-title');
     const modalDescription = document.getElementById('modal-description');
+    const modalRolesContainer = document.getElementById('modal-roles-container');
     const closeButton = modalOverlay.querySelector('.close-button');
 
     // Referencia al botón de modo oscuro
@@ -63,15 +64,61 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Función para mostrar el modal con los detalles del jugador
     function mostrarModal(jugador) {
+        // Limpia los contenedores del modal antes de llenarlos
+        modalImageContainer.innerHTML = '';
+        modalRolesContainer.innerHTML = '';
+        modalDescription.textContent = '';
+
+        // Muestra el nombre del jugador en el título del modal
+        modalTitle.textContent = jugador.nombre;
+
+        // Crea y muestra la imagen del rol principal
         const mainRole = jugador.lineas[0];
         const imagePath = `Icon/${roleImages[mainRole]}`;
+        const imageEl = document.createElement('img');
+        imageEl.classList.add('modal-image');
+        imageEl.src = imagePath;
+        imageEl.alt = `Icono de ${mainRole}`;
+        modalImageContainer.appendChild(imageEl);
 
-        modalImageContainer.innerHTML = `<img class="modal-image" src="${imagePath}" alt="Icono de ${mainRole}">`;
-        modalTitle.textContent = jugador.nombre;
-        modalDescription.textContent = `Este jugador puede desempeñarse en los siguientes roles: ${jugador.lineas.join(', ')}.`;
+        // Crea los botones para cada rol del jugador
+        jugador.lineas.forEach(rol => {
+            const button = document.createElement('button');
+            button.textContent = rol;
+            button.classList.add('role-button');
+            
+            // Agrega un listener al botón para mostrar la descripción del rol
+            button.addEventListener('click', () => {
+                mostrarDescripcionRol(jugador, rol);
+            });
+            modalRolesContainer.appendChild(button);
+        });
+
+        // Muestra la descripción del primer rol por defecto
+        mostrarDescripcionRol(jugador, mainRole);
 
         // Añade la clase 'visible' para activar la transición de opacidad del CSS
         modalOverlay.classList.add('visible');
+    }
+
+    // Función para mostrar la descripción de un rol específico
+    function mostrarDescripcionRol(jugador, rol) {
+        // Actualiza el texto de la descripción
+        modalDescription.textContent = jugador.descripciones[rol];
+
+        // Remueve la clase 'active' de todos los botones de rol
+        const allButtons = modalRolesContainer.querySelectorAll('.role-button');
+        allButtons.forEach(button => {
+            button.classList.remove('active-role');
+        });
+
+        // Encuentra y añade la clase 'active' al botón del rol seleccionado
+        const activeButtons = modalRolesContainer.querySelectorAll('.role-button');
+        activeButtons.forEach(button => {
+            if (button.textContent === rol) {
+                button.classList.add('active-role');
+            }
+        });
     }
 
     // Agrega el evento para cerrar el modal

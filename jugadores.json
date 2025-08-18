@@ -5,62 +5,99 @@
             "Adc",
             "Jungla",
             "Top"
-        ]
+        ],
+        "descripciones": {
+            "Adc": "El rol de tirador, enfocado en infligir daño a distancia y asegurar eliminaciones en peleas de equipo.",
+            "Jungla": "Se encarga de limpiar campamentos en la jungla, gankear carriles para ayudar a los aliados y asegurar los objetivos neutrales.",
+            "Top": "Un carrilero superior que se especializa en el combate cuerpo a cuerpo y en el control de la línea. Es crucial para el control de objetivos."
+        }
     },
     {
         "nombre": "Fede",
         "lineas": [
             "Medio",
             "Top"
-        ]
+        ],
+        "descripciones": {
+            "Medio": "Un carrilero central versátil que puede usar magos o asesinos para controlar la partida. Es responsable de rotar a otras líneas y ayudar a su equipo.",
+            "Top": "Luchador solitario en el carril superior, enfocado en el combate individual y en dividir la atención del equipo enemigo para abrir oportunidades en el mapa."
+        }
     },
     {
         "nombre": "Mar",
         "lineas": [
             "Sup",
             "Adc"
-        ]
+        ],
+        "descripciones": {
+            "Sup": "Un soporte con un kit de habilidades versátil, capaz de asistir a su equipo con control de visión, curaciones y escudos, o con daño adicional.",
+            "Adc": "Tirador experto en el carril inferior, enfocado en la fase de línea y en acumular oro y experiencia para convertirse en una amenaza en el juego tardío."
+        }
     },
     {
         "nombre": "Sarita",
         "lineas": [
             "Top",
             "Jungla"
-        ]
+        ],
+        "descripciones": {
+            "Top": "Luchadora incansable en el carril superior, experta en el combate cuerpo a cuerpo y en el control de la línea.",
+            "Jungla": "Controladora del ritmo del juego, moviéndose por el mapa para ayudar a los carriles a conseguir una ventaja temprana."
+        }
     },
     {
         "nombre": "Yahiko",
         "lineas": [
             "Adc",
             "Jungla"
-        ]
+        ],
+        "descripciones": {
+            "Adc": "Un tirador agresivo en el carril inferior, enfocado en presionar al oponente y asegurar las eliminaciones en la fase de líneas.",
+            "Jungla": "Un estratega en la jungla, que se especializa en emboscadas sorpresa y en la captura de objetivos neutrales."
+        }
     },
     {
         "nombre": "Geral",
         "lineas": [
             "Sup",
             "Medio"
-        ]
+        ],
+        "descripciones": {
+            "Sup": "Soporte de utilidad que ayuda a su equipo con curaciones y control de masas para asegurar el éxito en las peleas de equipo.",
+            "Medio": "Un mago que domina el carril central, infligiendo un daño explosivo y rotando para ayudar a los carriles laterales."
+        }
     },
     {
         "nombre": "Maira",
         "lineas": [
             "Medio",
             "Sup"
-        ]
+        ],
+        "descripciones": {
+            "Medio": "Un carrilero central que domina la fase de líneas, ejerciendo presión y control sobre su oponente.",
+            "Sup": "Soporte protector, enfocado en mantener a sus aliados seguros y darles las herramientas para sobresalir en las peleas."
+        }
     },
     {
         "nombre": "Luci",
         "lineas": [
             "Top",
             "Jungla"
-        ]
+        ],
+        "descripciones": {
+            "Top": "Una duelista formidable en el carril superior, capaz de dominar el uno contra uno y presionar la torre del enemigo.",
+            "Jungla": "Una jungla que se enfoca en la emboscada y en el control de la visión para sorprender a los oponentes en el mapa."
+        }
     },
     {
         "nombre": "David",
         "lineas": [
             "Top",
             "Sup"
-        ]
+        ],
+        "descripciones": {
+            "Top": "Un carrilero superior que se especializa en tanques y luchadores para resistir el daño y el control del equipo enemigo.",
+            "Sup": "Un soporte con habilidades de control de masas que puede iniciar peleas y proteger a su equipo de forma efectiva."
+        }
     }
 ]
