@@ -401,22 +401,24 @@ body.dark-mode .close-button:hover {
 
 /* Estilo para el ícono de rol grande en el modal */
 .modal-icon-large {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 15px;
-    border-radius: 50%;
-    border: 3px solid #FF69B4;
-    padding: 5px;
-    animation: spin 3s infinite linear;
-    transition: border-color 0.3s ease;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    /* Animación de brillo */
+    animation: shine 1.5s infinite linear;
 }
 
-body.dark-mode .modal-icon-large {
-    border: 3px solid #FF4081;
-}
-
-.modal-icon-large:hover {
-    animation-play-state: paused;
+.modal-icon-large::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 100%, rgba(255, 255, 255, 0) 100%);
+    transform: skewX(-20deg);
 }
 
 /* Estilo para el título y la descripción del rol */
@@ -437,6 +439,7 @@ body.dark-mode .modal-content h3 {
     color: #555;
     line-height: 1.8;
     transition: color 0.3s ease;
+    text-align: left; /* Alineación del texto de la descripción */
 }
 
 body.dark-mode .modal-content p {
@@ -454,9 +457,9 @@ body.dark-mode .modal-content p {
     to { transform: scale(1); opacity: 1; }
 }
 
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+@keyframes shine {
+    from { left: -75%; }
+    to { left: 100%; }
 }
 
 /* Media query para el modal en pantallas pequeñas */
@@ -465,8 +468,8 @@ body.dark-mode .modal-content p {
         padding: 20px;
     }
     .modal-icon-large {
-        width: 60px;
-        height: 60px;
+        width: 100px;
+        height: 100px;
     }
     .modal-content h3 {
         font-size: 1.5em;
