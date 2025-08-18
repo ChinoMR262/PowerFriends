@@ -1,38 +1,66 @@
 [
-  {
-    "nombre": "Chino",
-    "lineas": ["Adc", "Jungla", "Top"]
-  },
-  {
-    "nombre": "Fede",
-    "lineas": ["Medio", "Top"]
-  },
-  {
-    "nombre": "Mar",
-    "lineas": ["Sup", "Adc"]
-  },
-  {
-    "nombre": "Sarita",
-    "lineas": ["Top", "Jungla"]
-  },
-  {
-    "nombre": "Yahiko",
-    "lineas": ["Adc", "Jungla"]
-  },
-  {
-    "nombre": "Geral",
-    "lineas": ["Sup", "Medio"]
-  },
-  {
-    "nombre": "Maira",
-    "lineas": ["Medio", "Sup"]
-  },
-  {
-    "nombre": "Luci",
-    "lineas": ["Top", "Jungla"]
-  },
-  {
-    "nombre": "David",
-    "lineas": ["Top", "Sup"]
-  }
+    {
+        "nombre": "Chino",
+        "lineas": [
+            "Adc",
+            "Jungla",
+            "Top"
+        ]
+    },
+    {
+        "nombre": "Fede",
+        "lineas": [
+            "Medio",
+            "Top"
+        ]
+    },
+    {
+        "nombre": "Mar",
+        "lineas": [
+            "Sup",
+            "Adc"
+        ]
+    },
+    {
+        "nombre": "Sarita",
+        "lineas": [
+            "Top",
+            "Jungla"
+        ]
+    },
+    {
+        "nombre": "Yahiko",
+        "lineas": [
+            "Adc",
+            "Jungla"
+        ]
+    },
+    {
+        "nombre": "Geral",
+        "lineas": [
+            "Sup",
+            "Medio"
+        ]
+    },
+    {
+        "nombre": "Maira",
+        "lineas": [
+            "Medio",
+            "Sup"
+        ]
+    },
+    {
+        "nombre": "Luci",
+        "lineas": [
+            "Top",
+            "Jungla"
+        ]
+    },
+    {
+        "nombre": "David",
+        "lineas": [
+            "Top",
+            "Sup"
+        ]
+    }
 ]

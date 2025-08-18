@@ -454,6 +454,69 @@ body.dark-mode .modal-content p {
     color: #ddd;
 }
 
+/* Estilos para los nuevos controles */
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+}
+
+.controls #search-bar, .controls #role-filter {
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 25px;
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.controls #search-bar:focus, .controls #role-filter:focus {
+    border-color: #FF69B4;
+    box-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
+}
+
+body.dark-mode .controls #search-bar, body.dark-mode .controls #role-filter {
+    background-color: #333;
+    color: #f8f8f8;
+    border-color: #555;
+}
+
+body.dark-mode .controls #search-bar:focus, body.dark-mode .controls #role-filter:focus {
+    border-color: #FF4081;
+}
+
+.music-toggle {
+    background-color: #FF69B4;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.2em;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+.music-toggle:hover {
+    background-color: #FF4081;
+    transform: scale(1.1);
+}
+
+body.dark-mode .music-toggle {
+    background-color: #FF4081;
+    color: #1e1e1e;
+}
+
+body.dark-mode .music-toggle:hover {
+    background-color: #FF69B4;
+}
+
 /* Animaciones para el modal */
 @keyframes fadeInOverlay {
     from { opacity: 0; }
@@ -484,5 +547,13 @@ body.dark-mode .modal-content p {
     }
     .modal-content p {
         font-size: 1em;
+    }
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .controls #search-bar, .controls #role-filter, .music-toggle {
+        width: 100%;
+        margin: 5px 0;
     }
 }

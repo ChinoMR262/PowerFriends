@@ -1,127 +1,162 @@
-// La dirección de tu archivo JSON
-const jugadoresJSON = 'jugadores.json';
+// Espera a que el DOM esté completamente cargado antes de ejecutar el script
+document.addEventListener('DOMContentLoaded', () => {
 
-// Aquí obtenemos el div donde pondremos la lista de jugadores
-const contenedorJugadores = document.getElementById('lista-jugadores');
+    // Mapeo de roles a íconos SVG para mostrar en la interfaz
+    const roleIcons = {
+        "Top": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M576 176c0-26.5-21.5-48-48-48L464 0H288 112 48c-26.5 0-48 21.5-48 48L0 128H48 112 288 464l64-128H528c26.5 0 48-21.5 48-48zm-64 160H64c-35.3 0-64 28.7-64 64s28.7 64 64 64H512c35.3 0 64-28.7 64-64s-28.7-64-64-64zM64 352h448c17.7 0 32 14.3 32 32s-14.3 32-32 32H64c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/></svg>`,
+        "Jungla": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M495.9 166.4l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 192l-114.7 114.7c-15.9 15.9-44.1 1.7-44.1-20.9V224c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 17.7 14.3 32 32 32s32-14.3 32-32v-32.5c24.3-25.7 34.6-56.7 35.1-84.3c-28.7-1.1-57.9 9.3-80.1 31.5L78.6 363.4c-17.1 17.1-17.1 44.8 0 61.9l48 48c17.1 17.1 44.8 17.1 61.9 0L392.6 244.3c15.9-15.9 31.9-2.7 20.9-15.9l82.4-82.4c12.5-12.5 12.5-32.8 0-45.3zM100.3 388.3l-2.4 2.4c-3.1 3.1-4.7 7.2-4.7 11.3s1.6 8.2 4.7 11.3l48 48c6.2 6.2 16.4 6.2 22.6 0l2.4-2.4-70.6-70.6zm222.8-125.8c-26.6 26.6-69.8 26.6-96.5 0s-26.6-69.8 0-96.5s69.8-26.6 96.5 0s26.6 69.8 0 96.5zM224 224c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 17.7 14.3 32 32 32s32-14.3 32-32v-64zM240 160c-26.5-0-48-21.5-48-48V64c0-26.5 21.5-48 48-48h64c26.5 0 48 21.5 48 48v48c0 26.5-21.5 48-48 48H240zM304 64c0-8.8-7.2-16-16-16H240c-8.8 0-16 7.2-16 16v48c0 8.8 7.2 16 16 16h64c8.8 0 16-7.2 16-16V64z"/></svg>`,
+        "Medio": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M448 352c17.7 0 32 14.3 32 32s-14.3 32-32 32H192c-17.7 0-32-14.3-32-32s14.3-32 32-32H448zm-96-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V320c0 17.7 14.3 32 32 32s32-14.3 32-32zM288 448c-17.7 0-32 14.3-32 32s14.3 32 32 32H384c17.7 0 32-14.3 32-32s-14.3-32-32-32H288zm352-192c0 26.5-21.5 48-48 48H352c-26.5 0-48-21.5-48-48V48c0-26.5 21.5-48 48-48H592c26.5 0 48 21.5 48 48V256zM96 256c0-17.7 14.3-32 32-32s32 14.3 32 32v48c0 17.7-14.3 32-32 32s-32-14.3-32-32V256zm-96 0c0-26.5 21.5-48 48-48h48c26.5 0 48 21.5 48 48v48c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V256zm128-48c-26.5 0-48-21.5-48-48V48c0-26.5 21.5-48 48-48h48c26.5 0 48 21.5 48 48v160c0 26.5-21.5 48-48 48H128z"/></svg>`,
+        "Adc": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M480 32c-35.3 0-64 28.7-64 64V208c0 8.8-7.2 16-16 16s-16-7.2-16-16V96c0-35.3-28.7-64-64-64s-64 28.7-64 64V208c0 8.8-7.2 16-16 16s-16-7.2-16-16V96c0-35.3-28.7-64-64-64S64 60.7 64 96V208c0 8.8-7.2 16-16 16s-16-7.2-16-16V96C32 43 75 0 128 0s96 43 96 96V224c0 35.3 28.7 64 64 64s64-28.7 64-64V96c0-35.3 28.7-64 64-64s64 28.7 64 64V224c0 35.3 28.7 64 64 64s64-28.7 64-64V96c0-35.3 28.7-64 64-64zM240 320c-13.2 0-24 10.8-24 24s10.8 24 24 24h32c13.2 0 24-10.8 24-24s-10.8-24-24-24H240zm240 0c-13.2 0-24 10.8-24 24s10.8 24 24 24h32c13.2 0 24-10.8 24-24s-10.8-24-24-24H480zM64 320c-13.2 0-24 10.8-24 24s10.8 24 24 24h32c13.2 0 24-10.8 24-24s-10.8-24-24-24H64zM224 400c-13.2 0-24 10.8-24 24s10.8 24 24 24h32c13.2 0 24-10.8 24-24s-10.8-24-24-24H224zm240 0c-13.2 0-24 10.8-24 24s10.8 24 24 24h32c13.2 0 24-10.8 24-24s-10.8-24-24-24H464zM48 400c-13.2 0-24 10.8-24 24s10.8 24 24 24h32c13.2 0 24-10.8 24-24s-10.8-24-24-24H48zM304 480c-13.2 0-24 10.8-24 24s10.8 24 24 24h32c13.2 0 24-10.8 24-24s-10.8-24-24-24H304zM240 480c-13.2 0-24 10.8-24 24s10.8 24 24 24h32c13.2 0 24-10.8 24-24s-10.8-24-24-24H240z"/></svg>`,
+        "Sup": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M448 32c17.7 0 32 14.3 32 32V256c0 17.7-14.3 32-32 32s-32-14.3-32-32V64c0-17.7 14.3-32 32-32zM288 32c-17.7 0-32 14.3-32 32V256c0 17.7 14.3 32 32 32s32-14.3 32-32V64c0-17.7-14.3-32-32-32zM32 32c17.7 0 32 14.3 32 32V256c0 17.7-14.3 32-32 32s-32-14.3-32-32V64c0-17.7 14.3-32 32-32zm480 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V448c0 17.7 14.3 32 32 32s32-14.3 32-32V96zm-160 0c0-17.7-14.3-32-32-32s-32 14.3-32 32V448c0 17.7 14.3 32 32 32s32-14.3 32-32V96zM160 64c0-17.7-14.3-32-32-32s-32 14.3-32 32V448c0 17.7 14.3 32 32 32s32-14.3 32-32V64z"/></svg>`
+    };
 
-// Obtenemos el botón para cambiar el modo oscuro
-const darkModeToggle = document.getElementById('dark-mode-toggle');
-
-// Objeto con descripciones de cada rol
-const descripcionesRoles = {
-    'Adc': 'El **Attack Damage Carry** (ADC) es el tirador del equipo. Se enfoca en infligir una gran cantidad de daño físico a distancia en las peleas de equipo. Su éxito depende de un buen posicionamiento y la protección de su equipo.',
-    'Jungla': 'El **Jungla** es el jugador que se encarga de cazar monstruos neutrales en la jungla. Su principal función es ayudar a las líneas con gankeos, asegurar objetivos y controlar el mapa.',
-    'Medio': 'El jugador del **carril central** (Mid) es la fuente principal de daño mágico o físico del equipo. Tiene una gran movilidad y puede influir en todas las líneas del mapa, ayudando a su jungla y a sus compañeros.',
-    'Sup': 'El **Soporte** (Sup) protege a su ADC en la fase de líneas y al resto del equipo en las peleas. Es crucial para el control de visión del mapa y para iniciar o contrarrestar los ataques enemigos.',
-    'Top': 'El jugador del **carril superior** (Top) es un especialista en duelos uno contra uno. Generalmente juega con tanques o luchadores, y su objetivo es dominar su línea para poder unirse a su equipo y ganar las peleas de equipo.'
-};
-
-// Función para guardar y cargar la preferencia del modo oscuro
-function toggleDarkMode() {
-    // Alterna la clase 'dark-mode' en el body
-    document.body.classList.toggle('dark-mode');
-    
-    // Guarda la preferencia en el almacenamiento local del navegador
-    const isDarkMode = document.body.classList.contains('dark-mode');
-    localStorage.setItem('darkMode', isDarkMode);
-}
-
-// Carga la preferencia guardada al iniciar la página
-function loadDarkModePreference() {
-    const isDarkMode = localStorage.getItem('darkMode') === 'true';
-    if (isDarkMode) {
-        document.body.classList.add('dark-mode');
-    }
-}
-
-// Llama a la función de carga al iniciar la página
-loadDarkModePreference();
-
-// Añade un 'event listener' al botón para cambiar el modo oscuro al hacer clic
-darkModeToggle.addEventListener('click', toggleDarkMode);
-
-// Función para obtener el ícono del rol usando imágenes PNG y un atributo de datos
-function obtenerIconoRol(rol) {
-    const roleName = rol.charAt(0).toUpperCase() + rol.slice(1).toLowerCase();
-    return `<img src="Icon/${roleName}.png" alt="${rol}" class="role-icon" data-role="${rol}">`;
-}
-
-// Función para mostrar el modal con la descripción del rol
-function mostrarModal(rol) {
-    const descripcion = descripcionesRoles[rol] || 'Descripción no disponible.';
-    const roleName = rol.charAt(0).toUpperCase() + rol.slice(1).toLowerCase();
-    
-    // Creamos los elementos del modal
+    // Referencias a los elementos del DOM
+    const listaJugadoresEl = document.getElementById('lista-jugadores');
+    const searchBar = document.getElementById('search-bar');
+    const roleFilter = document.getElementById('role-filter');
     const modalOverlay = document.createElement('div');
     modalOverlay.classList.add('modal-overlay');
-
-    const modalContent = document.createElement('div');
-    modalContent.classList.add('modal-content');
-
-    // Construimos el contenido del modal
-    modalContent.innerHTML = `
-        <button class="close-button">&times;</button>
-        <img src="Icon/${roleName}.png" alt="${rol}" class="modal-icon-large">
-        <h3>${rol}</h3>
-        <p>${descripcion}</p>
-    `;
-
-    // Añadimos el contenido al overlay y el overlay al cuerpo del documento
-    modalOverlay.appendChild(modalContent);
     document.body.appendChild(modalOverlay);
 
-    // Funcionalidad para cerrar el modal
-    const closeButton = modalContent.querySelector('.close-button');
-    closeButton.addEventListener('click', () => {
-        modalOverlay.remove();
-    });
+    // Referencias a los botones y audio
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const musicToggle = document.getElementById('music-toggle');
+    const backgroundMusic = document.getElementById('background-music');
 
-    // Cerrar el modal al hacer clic fuera del contenido
-    modalOverlay.addEventListener('click', (e) => {
-        if (e.target === modalOverlay) {
-            modalOverlay.remove();
+    let currentFilter = {
+        searchText: '',
+        role: 'all'
+    };
+
+    let jugadores = []; // Se inicializa vacío, se llenará con los datos del JSON.
+
+    // Función para renderizar los jugadores en la interfaz
+    function renderizarJugadores(jugadoresFiltrados) {
+        listaJugadoresEl.innerHTML = ''; // Limpia el contenedor
+        if (jugadoresFiltrados.length === 0) {
+            listaJugadoresEl.innerHTML = '<p class="no-results">No se encontraron jugadores que coincidan con la búsqueda.</p>';
         }
-    });
-}
+        jugadoresFiltrados.forEach(jugador => {
+            const jugadorEl = document.createElement('div');
+            jugadorEl.classList.add('jugador');
+            
+            // Crea un contenedor para los íconos de las líneas
+            const iconContainer = document.createElement('div');
+            iconContainer.classList.add('role-icons-container');
+            jugador.lineas.forEach(linea => {
+                const iconSpan = document.createElement('span');
+                iconSpan.classList.add('role-icon');
+                iconSpan.innerHTML = roleIcons[linea];
+                iconContainer.appendChild(iconSpan);
+            });
 
-// Usamos la función 'fetch' para cargar el archivo JSON
-fetch(jugadoresJSON)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(jugadores => {
-        // Por cada jugador que encontramos en la lista...
-        jugadores.forEach(jugador => {
-            // ...creamos un nuevo elemento para mostrar su información
-            const jugadorDiv = document.createElement('div');
-            jugadorDiv.classList.add('jugador');
-
-            // Creamos los íconos para cada línea del jugador
-            const lineasHTML = jugador.lineas.map(linea => obtenerIconoRol(linea)).join('');
-
-            // Y dentro de ese elemento, ponemos su nombre y sus líneas
-            jugadorDiv.innerHTML = `
+            jugadorEl.innerHTML = `
                 <h3>${jugador.nombre}</h3>
-                <p><strong>Roles:</strong> ${lineasHTML}</p>
+                <p><strong>Roles:</strong></p>
             `;
+            jugadorEl.appendChild(iconContainer);
 
-            // Finalmente, agregamos este nuevo elemento al contenedor en el HTML
-            contenedorJugadores.appendChild(jugadorDiv);
+            // Agrega un listener para mostrar la descripción al hacer clic
+            jugadorEl.addEventListener('click', () => mostrarModal(jugador));
+            listaJugadoresEl.appendChild(jugadorEl);
         });
-    })
-    .catch(error => {
-        console.error('Error al cargar los datos:', error);
-        contenedorJugadores.innerHTML = '<p>Lo sentimos, no se pudo cargar la lista de jugadores. Por favor, revisa que el archivo jugadores.json exista y esté bien escrito.</p>';
+    }
+
+    // Función para mostrar el modal con los detalles del jugador
+    function mostrarModal(jugador) {
+        // Crea el HTML para los íconos de roles dentro del modal
+        const iconsHtml = jugador.lineas.map(linea => {
+            return `<div class="modal-icon-large">${roleIcons[linea]}</div>`;
+        }).join('');
+
+        modalOverlay.innerHTML = `
+            <div class="modal-content">
+                <button class="close-button">&times;</button>
+                <div class="modal-icon-container">
+                    ${iconsHtml}
+                </div>
+                <h3>${jugador.nombre}</h3>
+                <p>Este jugador puede desempeñarse en los siguientes roles: ${jugador.lineas.join(', ')}.</p>
+            </div>
+        `;
+        modalOverlay.style.display = 'flex';
+
+        // Agrega el evento para cerrar el modal
+        const closeButton = modalOverlay.querySelector('.close-button');
+        closeButton.addEventListener('click', () => {
+            modalOverlay.style.display = 'none';
+        });
+
+        // Cierra el modal si se hace clic fuera del contenido
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal-overlay')) {
+                modalOverlay.style.display = 'none';
+            }
+        });
+    }
+
+    // Función para filtrar y actualizar la lista de jugadores
+    function filtrarJugadores() {
+        const { searchText, role } = currentFilter;
+        const jugadoresFiltrados = jugadores.filter(jugador => {
+            const nombreCoincide = jugador.nombre.toLowerCase().includes(searchText.toLowerCase());
+            // Ahora se verifica si el array de 'lineas' del jugador incluye el rol seleccionado
+            const rolCoincide = role === 'all' || jugador.lineas.includes(role);
+            return nombreCoincide && rolCoincide;
+        });
+        renderizarJugadores(jugadoresFiltrados);
+    }
+
+    // Escucha eventos en la barra de búsqueda
+    searchBar.addEventListener('input', (e) => {
+        currentFilter.searchText = e.target.value;
+        filtrarJugadores();
     });
 
-// Event listener para manejar los clics en los íconos de rol
-document.addEventListener('click', (e) => {
-    // Verificamos si el elemento clicado tiene la clase 'role-icon' y tiene el atributo 'data-role'
-    if (e.target.classList.contains('role-icon') && e.target.dataset.role) {
-        // Llamamos a la función para mostrar el modal con el rol correspondiente
-        mostrarModal(e.target.dataset.role);
-    }
+    // Escucha eventos en el filtro de rol
+    roleFilter.addEventListener('change', (e) => {
+        currentFilter.role = e.target.value;
+        filtrarJugadores();
+    });
+
+    // Escucha el evento de click del botón de modo oscuro
+    darkModeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        // Cambia el ícono del botón
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        darkModeToggle.querySelector('i').className = isDarkMode ? 'fas fa-sun' : 'fas fa-moon';
+    });
+
+    // Escucha el evento de click del botón de música
+    musicToggle.addEventListener('click', () => {
+        const musicIcon = musicToggle.querySelector('i');
+        if (backgroundMusic.paused) {
+            backgroundMusic.play().catch(e => console.error("Error al intentar reproducir el audio:", e));
+            musicIcon.classList.remove('fa-play');
+            musicIcon.classList.add('fa-pause');
+        } else {
+            backgroundMusic.pause();
+            musicIcon.classList.remove('fa-pause');
+            musicIcon.classList.add('fa-play');
+        }
+    });
+
+    // ** Lógica para cargar los datos desde el archivo JSON **
+    // Esta es la parte nueva que hace que todo el proyecto sea funcional y modular.
+    fetch('jugadores.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('No se pudo cargar el archivo jugadores.json');
+            }
+            return response.json();
+        })
+        .then(data => {
+            jugadores = data; // Asigna los datos del JSON a la variable jugadores
+            renderizarJugadores(jugadores); // Renderiza los jugadores una vez que los datos están cargados
+        })
+        .catch(error => {
+            console.error('Error al cargar la lista de jugadores:', error);
+            listaJugadoresEl.innerHTML = '<p class="error">Ocurrió un error al cargar los jugadores. Por favor, revisa que el archivo "jugadores.json" exista.</p>';
+        });
+
 });

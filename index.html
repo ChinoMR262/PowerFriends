@@ -4,32 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PowerFriends</title>
-    <!-- Enlace a la librería de íconos Remix Icon -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
-    <!-- Enlace a tu archivo de estilos CSS -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-
+    <!-- Botón para cambiar el modo oscuro -->
+    <button id="dark-mode-toggle" class="dark-mode-toggle">
+        <i class="fas fa-moon"></i>
+    </button>
+    
     <header>
         <h1>PowerFriends</h1>
         <p>Somos un grupo de jugadores amables, que quizás no seamos los mejores, pero juntos formamos un equipo agradable y digno de competir.</p>
     </header>
 
     <main>
-        <h2>Nuestros Jugadores</h2>
-        <div id="lista-jugadores">
-            <!-- Aquí es donde el JavaScript insertará la información de los jugadores -->
+        <!-- Sección de controles de búsqueda y filtro -->
+        <div class="controls">
+            <input type="text" id="search-bar" placeholder="Buscar jugador...">
+            <select id="role-filter">
+                <option value="all">Todos los roles</option>
+                <option value="Adc">Adc</option>
+                <option value="Jungla">Jungla</option>
+                <option value="Medio">Medio</option>
+                <option value="Sup">Sup</option>
+                <option value="Top">Top</option>
+            </select>
+            <!-- Botón de control de música -->
+            <button id="music-toggle" class="music-toggle">
+                <i class="fas fa-play"></i>
+            </button>
+            <audio id="background-music" loop>
+                <!-- Comentario: Reemplaza la URL 'path/to/your/music.mp3' con la de tu archivo de música -->
+                <source src="path/to/your/music.mp3" type="audio/mpeg">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
         </div>
+
+        <h2>Lista de Jugadores</h2>
+        <!-- Aquí se renderizará la lista de jugadores dinámicamente -->
+        <div id="lista-jugadores"></div>
     </main>
-    
-    <!-- Botón para alternar el modo oscuro -->
-    <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Alternar modo oscuro">
-        <i class="ri-moon-fill"></i>
-    </button>
 
-    <!-- Enlace a tu archivo de código JavaScript -->
     <script src="script.js"></script>
-
 </body>
 </html>
