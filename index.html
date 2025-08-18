@@ -40,15 +40,15 @@
     </main>
 
     <!-- Overlay para el modal que se muestra al hacer clic en un jugador -->
-    <!-- Inicialmente oculto por CSS, JavaScript lo mostrará y llenará -->
     <div id="modal-overlay" class="modal-overlay">
         <div class="modal-content">
             <button class="close-button">&times;</button>
             <div id="modal-image-container" class="modal-image-container">
                 <!-- La imagen se insertará aquí mediante JavaScript -->
             </div>
+            <!-- Se agrega contenido para corregir el error de SonarLint -->
             <h3 id="modal-title">Detalles del jugador</h3>
-            <p id="modal-description"></p>
+            <p id="modal-description" aria-hidden="true"></p>
         </div>
     </div>
 

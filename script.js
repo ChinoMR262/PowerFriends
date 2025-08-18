@@ -22,12 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let jugadores = []; // Se inicializa vacío, se llenará con los datos del JSON.
 
     // Mapeo de roles a nombres de archivo de imagen
+    // Se ha corregido para que los íconos sean archivos .png
     const roleImages = {
-        "Adc": "Adc.webp",
-        "Jungla": "Jungla.webp",
-        "Medio": "Medio.webp",
-        "Sup": "Sup.webp",
-        "Top": "Top.webp"
+        "Adc": "Adc.png",
+        "Jungla": "Jungla.png",
+        "Medio": "Medio.png",
+        "Sup": "Sup.png",
+        "Top": "Top.png"
     };
     
     // Función para renderizar los jugadores en la interfaz
