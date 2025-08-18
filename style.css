@@ -226,6 +226,7 @@ body.dark-mode .jugador p i:hover {
 @media (max-width: 768px) {
     #lista-jugadores {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px; /* Reducir el espacio entre tarjetas en tablets */
     }
 
     header {
@@ -246,16 +247,51 @@ body.dark-mode .jugador p i:hover {
 }
 
 @media (max-width: 480px) {
+    /* Diseño específico para móviles pequeños */
+    body {
+        padding: 0;
+    }
+
+    header {
+        padding: 40px 10px; /* Reducir el padding en el encabezado */
+        margin-bottom: 20px;
+    }
+
+    header h1 {
+        font-size: 2em; /* Reducir aún más el tamaño del título */
+        letter-spacing: 2px;
+    }
+
+    header p {
+        font-size: 0.9em;
+        padding: 0 10px; /* Asegurar que el texto no se salga de la pantalla */
+    }
+
+    main {
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 1.8em;
+        margin-top: 20px;
+        margin-bottom: 15px;
+    }
+
     #lista-jugadores {
         grid-template-columns: 1fr; /* Una sola columna en pantallas muy pequeñas */
+        gap: 15px;
     }
 
     .jugador {
-        padding: 20px;
+        padding: 15px; /* Reducir el padding de las tarjetas */
     }
 
     .jugador h3 {
-        font-size: 1.4em;
+        font-size: 1.2em;
+    }
+
+    .jugador p {
+        font-size: 0.9em;
     }
 
     .jugador p i {
@@ -293,6 +329,7 @@ body.dark-mode .jugador p i:hover {
     font-size: 1.5em;
     outline: none;
     transition: color 0.3s ease;
+    z-index: 1000;
 }
 
 body.dark-mode .dark-mode-toggle {

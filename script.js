@@ -1,7 +1,7 @@
 // La dirección de tu archivo JSON
 const jugadoresJSON = 'jugadores.json';
 
-// Aquí obtendremos el div donde pondremos la lista de jugadores
+// Aquí obtenemos el div donde pondremos la lista de jugadores
 const contenedorJugadores = document.getElementById('lista-jugadores');
 
 // Obtenemos el botón para cambiar el modo oscuro
