@@ -292,6 +292,14 @@ body.dark-mode .jugador p strong {
         height: 28px;
         margin: 0 5px;
     }
+
+    /* Regla del modal actualizada para móviles */
+    .modal-content {
+        width: 90%;
+        max-width: 350px;
+        padding: 20px;
+        margin: 10px;
+    }
 }
 
 .jugador:nth-child(1) { animation-delay: 0.05s; }
@@ -458,8 +466,8 @@ body.dark-mode .modal-content p {
 }
 
 @keyframes shine {
-    from { left: -75%; }
-    to { left: 100%; }
+    from { transform: translateX(0%); }
+    to { transform: translateX(200%); }
 }
 
 /* Media query para el modal en pantallas pequeñas */
