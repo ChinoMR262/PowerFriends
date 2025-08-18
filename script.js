@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchBar = document.getElementById('search-bar');
     const roleFilter = document.getElementById('role-filter');
     const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const musicToggle = document.getElementById('music-toggle');
+    const backgroundMusic = document.getElementById('background-music');
 
     // Elementos del modal
     const modalOverlay = document.createElement('div');
@@ -40,6 +42,22 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('No se pudo cargar el archivo jugadores.json:', error);
             listaJugadoresDiv.innerHTML = '<p class="error-message">Hubo un problema al cargar los datos de los jugadores. Por favor, inténtalo de nuevo más tarde.</p>';
         }
+    }
+    
+    /**
+     * Filtra los jugadores según la barra de búsqueda y el filtro de roles.
+     */
+    function filtrarJugadores() {
+        const searchText = searchBar.value.toLowerCase();
+        const selectedRole = roleFilter.value;
+
+        const jugadoresFiltrados = todosLosJugadores.filter(jugador => {
+            const nombreCoincide = jugador.nombre.toLowerCase().includes(searchText);
+            const rolCoincide = selectedRole === 'all' || jugador.lineas.includes(selectedRole);
+            return nombreCoincide && rolCoincide;
+        });
+
+        mostrarJugadores(jugadoresFiltrados);
     }
 
     /**
@@ -79,22 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Filtra los jugadores basados en el texto de búsqueda y el rol seleccionado.
-     */
-    function filtrarJugadores() {
-        const searchText = searchBar.value.toLowerCase();
-        const selectedRole = roleFilter.value;
-
-        const jugadoresFiltrados = todosLosJugadores.filter(jugador => {
-            const nombreCoincide = jugador.nombre.toLowerCase().includes(searchText);
-            const rolCoincide = selectedRole === 'all' || jugador.lineas.includes(selectedRole);
-            return nombreCoincide && rolCoincide;
-        });
-
-        mostrarJugadores(jugadoresFiltrados);
-    }
-    
-    /**
      * Muestra el modal de perfil de jugador con la información de un jugador específico.
      * @param {Object} jugador - Objeto del jugador a mostrar.
      * @param {string} selectedRole - El rol específico que fue clickeado para mostrar su imagen.
@@ -106,17 +108,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Contenedor de la imagen del rol clickeado
         const imageContainer = document.createElement('div');
         imageContainer.classList.add('modal-image-container');
-        // Usa la imagen del rol clickeado
-        const imagePath = `Icon/${selectedRole}.png`;
-        const roleImage = document.createElement('img');
-        roleImage.src = imagePath;
-        roleImage.alt = `Imagen del rol ${selectedRole}`;
         
-        // Manejo de errores en caso de que la imagen no exista
-        roleImage.onerror = () => {
-            roleImage.src = 'https://placehold.co/200x200/ff69b4/ffffff?text=Icono+no+encontrado';
-            roleImage.alt = 'Imagen por defecto: icono no encontrado';
-        };
+        // ** CORRECCIÓN: Usar la ruta de imagen proporcionada por el usuario **
+        const roleImage = document.createElement('img');
+        roleImage.src = `Icon/${selectedRole}.png`;
+        roleImage.alt = `Imagen del rol ${selectedRole}`;
 
         imageContainer.appendChild(roleImage);
         
@@ -173,6 +169,17 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('dark-mode');
         darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
     }
+
+    // Manejo de la música
+    musicToggle.addEventListener('click', () => {
+        if (backgroundMusic.paused) {
+            backgroundMusic.play();
+            musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+        } else {
+            backgroundMusic.pause();
+            musicToggle.innerHTML = '<i class="fas fa-play"></i>';
+        }
+    });
 
     // Cierra el modal al hacer clic en el botón de cerrar
     closeModalButton.addEventListener('click', cerrarModal);
