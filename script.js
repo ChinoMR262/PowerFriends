@@ -76,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const mainRole = jugador.lineas[0];
         const imagePath = `Icon/${roleImages[mainRole]}`;
         const imageEl = document.createElement('img');
+        imageEl.id = 'modal-image-main'; // Agrega un ID para una fácil referencia
         imageEl.classList.add('modal-image');
         imageEl.src = imagePath;
         imageEl.alt = `Icono de ${mainRole}`;
@@ -87,24 +88,29 @@ document.addEventListener('DOMContentLoaded', () => {
             button.textContent = rol;
             button.classList.add('role-button');
             
-            // Agrega un listener al botón para mostrar la descripción del rol
+            // Agrega un listener al botón para mostrar la descripción y cambiar la imagen
             button.addEventListener('click', () => {
-                mostrarDescripcionRol(jugador, rol);
+                mostrarDescripcionYCambiarImagen(jugador, rol);
             });
             modalRolesContainer.appendChild(button);
         });
 
-        // Muestra la descripción del primer rol por defecto
-        mostrarDescripcionRol(jugador, mainRole);
+        // Muestra la descripción y la imagen del primer rol por defecto
+        mostrarDescripcionYCambiarImagen(jugador, mainRole);
 
         // Añade la clase 'visible' para activar la transición de opacidad del CSS
         modalOverlay.classList.add('visible');
     }
 
-    // Función para mostrar la descripción de un rol específico
-    function mostrarDescripcionRol(jugador, rol) {
+    // Función para mostrar la descripción de un rol específico y cambiar la imagen
+    function mostrarDescripcionYCambiarImagen(jugador, rol) {
         // Actualiza el texto de la descripción
         modalDescription.textContent = jugador.descripciones[rol];
+
+        // Actualiza la imagen del modal
+        const imageEl = document.getElementById('modal-image-main');
+        imageEl.src = `Icon/${roleImages[rol]}`;
+        imageEl.alt = `Icono de ${rol}`;
 
         // Remueve la clase 'active' de todos los botones de rol
         const allButtons = modalRolesContainer.querySelectorAll('.role-button');
@@ -181,4 +187,11 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error al cargar la lista de jugadores:', error);
             listaJugadoresEl.innerHTML = '<p class="error">Ocurrió un error al cargar los jugadores. Por favor, revisa que el archivo "jugadores.json" exista.</p>';
         });
+
+    // Lógica para actualizar el año del copyright automáticamente
+    const currentYear = new Date().getFullYear();
+    const footerParagraph = document.querySelector('footer p');
+    if (footerParagraph) {
+        footerParagraph.textContent = `© ${currentYear} PowerFriends. Todos los derechos reservados.`;
+    }
 });
