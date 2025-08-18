@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "Sup": "Sup.png",
         "Top": "Top.png"
     };
-    
+
     // Función para renderizar los jugadores en la interfaz
     function renderizarJugadores(jugadoresFiltrados) {
         listaJugadoresEl.innerHTML = ''; // Limpia el contenedor
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         jugadoresFiltrados.forEach(jugador => {
             const jugadorEl = document.createElement('div');
             jugadorEl.classList.add('jugador');
-            
+
             // Crea un contenedor para la imagen principal del jugador (el primer rol)
             const mainRole = jugador.lineas[0];
             const imagePath = `Icon/${roleImages[mainRole]}`;
@@ -71,18 +71,20 @@ document.addEventListener('DOMContentLoaded', () => {
         modalTitle.textContent = jugador.nombre;
         modalDescription.textContent = `Este jugador puede desempeñarse en los siguientes roles: ${jugador.lineas.join(', ')}.`;
 
-        modalOverlay.style.display = 'flex';
+        // Añade la clase 'visible' para activar la transición de opacidad del CSS
+        modalOverlay.classList.add('visible');
     }
 
     // Agrega el evento para cerrar el modal
     closeButton.addEventListener('click', () => {
-        modalOverlay.style.display = 'none';
+        // Remueve la clase 'visible' para ocultar el modal
+        modalOverlay.classList.remove('visible');
     });
 
     // Cierra el modal si se hace clic fuera del contenido
     modalOverlay.addEventListener('click', (e) => {
         if (e.target.id === 'modal-overlay') {
-            modalOverlay.style.display = 'none';
+            modalOverlay.classList.remove('visible');
         }
     });
 
