@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Referencias a los elementos internos del modal
     const modalDetails = modalOverlay.querySelector('.modal-details');
+    // Este era el punto de error. Nos aseguramos de que el botón exista antes de intentar usarlo.
     const closeModalButton = modalOverlay.querySelector('.close-button');
 
     // Almacenamiento de datos para los jugadores
@@ -36,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('jugadores.json');
             
             if (!response.ok) {
+                // Si la respuesta no es OK (por ejemplo, 404 Not Found), lanzamos un error.
                 throw new Error(`Error HTTP: ${response.status}`);
             }
             
@@ -123,10 +125,11 @@ document.addEventListener('DOMContentLoaded', () => {
         imageContainer.classList.add('modal-image-container');
         
         // Usar la ruta de imagen proporcionada por el usuario
+        // ¡Importante!: La carpeta 'Icon' y el nombre de la imagen deben coincidir EXACTAMENTE con los de tu repositorio.
         const roleImage = document.createElement('img');
         roleImage.src = `Icon/${selectedRole}.png`;
         roleImage.alt = `Imagen del rol ${selectedRole}`;
-        // En caso de que la imagen no se encuentre
+        // En caso de que la imagen no se encuentre, usa un placeholder.
         roleImage.onerror = () => {
             console.error(`Error al cargar la imagen: Icon/${selectedRole}.png`);
             roleImage.src = `https://placehold.co/200x200/ff69b4/fff?text=${selectedRole.toUpperCase()}`;
@@ -200,7 +203,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Cierra el modal al hacer clic en el botón de cerrar
-    closeModalButton.addEventListener('click', cerrarModal);
+    // Añadimos una verificación para evitar el error 'null'
+    if (closeModalButton) {
+      closeModalButton.addEventListener('click', cerrarModal);
+    } else {
+      console.error("El botón de cerrar el modal no fue encontrado. El modal puede no funcionar correctamente.");
+    }
+    
 
     // Cierra el modal al hacer clic fuera del contenido
     modalOverlay.addEventListener('click', (event) => {
