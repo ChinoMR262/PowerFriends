@@ -41,6 +41,42 @@ h1 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Estilos y animación para el título principal */
+.main-title {
+    font-size: 3.5em; /* Hace el título más grande */
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    background: linear-gradient(45deg, #ff69b4, #ff4081);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: pulse 2s infinite ease-in-out;
+}
+
+body.dark-mode .main-title {
+    background: linear-gradient(45deg, #ff4081, #ff69b4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Animación de pulso para el título */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        text-shadow: 0 0 5px rgba(255, 105, 180, 0.4);
+    }
+    50% {
+        transform: scale(1.05);
+        text-shadow: 0 0 15px rgba(255, 105, 180, 0.8);
+    }
+    100% {
+        transform: scale(1);
+        text-shadow: 0 0 5px rgba(255, 105, 180, 0.4);
+    }
+}
+
 header p {
     font-size: 1.1em;
     max-width: 600px;
@@ -360,6 +396,21 @@ body.dark-mode .role-button.active-role {
     100% {
         box-shadow: 0 0 15px 5px rgba(255, 105, 180, 0.2);
     }
+}
+
+/* Estilos para el pie de página */
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+    margin-top: 40px;
+    border-top: 1px solid #ddd;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark-mode .footer {
+    background-color: #222;
+    border-top: 1px solid #444;
 }
 
 /*
