@@ -133,8 +133,14 @@ document.addEventListener('DOMContentLoaded', () => {
             button.addEventListener('click', () => {
                 const selectedRole = button.dataset.role;
                 const description = jugador.descripciones[selectedRole] || 'No hay descripción disponible para este rol.';
+                const roleName = selectedRole.charAt(0).toUpperCase() + selectedRole.slice(1).toLowerCase();
+                const roleImageSrc = `Icon/${roleName}.png`;
+
                 roleDescriptionContainer.innerHTML = `
-                    <h4>Descripción de ${selectedRole}:</h4>
+                    <div class="role-content">
+                        <img src="${roleImageSrc}" alt="${selectedRole}" class="role-description-icon">
+                        <h4>Descripción de ${selectedRole}:</h4>
+                    </div>
                     <p>${description}</p>
                 `;
             });

@@ -533,6 +533,19 @@ body.dark-mode .role-description-container h4 {
     color: #e2e8f0;
 }
 
+/* Estilo para el nuevo contenedor de la imagen y el título del rol */
+.role-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.role-description-icon {
+    width: 32px;
+    height: 32px;
+}
+
 /* Estilos para los nuevos controles */
 .controls {
     display: flex;
