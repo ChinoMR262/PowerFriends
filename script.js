@@ -4,8 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchBar = document.getElementById('search-bar');
     const roleFilter = document.getElementById('role-filter');
     const darkModeToggle = document.getElementById('dark-mode-toggle');
-    const musicToggle = document.getElementById('music-toggle'); // Agregado para el control de música
-    const backgroundMusic = document.getElementById('background-music'); // Agregado para el audio
 
     // Elementos del modal
     const modalOverlay = document.createElement('div');
@@ -180,17 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('dark-mode');
         darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
     }
-
-    // Manejo de la música
-    musicToggle.addEventListener('click', () => {
-        if (backgroundMusic.paused) {
-            backgroundMusic.play();
-            musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
-        } else {
-            backgroundMusic.pause();
-            musicToggle.innerHTML = '<i class="fas fa-play"></i>';
-        }
-    });
 
     // Cierra el modal al hacer clic en el botón de cerrar
     closeModalButton.addEventListener('click', cerrarModal);
