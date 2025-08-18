@@ -263,8 +263,8 @@ body.dark-mode .jugador p {
 }
 
 .player-avatar {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 15px;
@@ -361,7 +361,7 @@ body.dark-mode .modal-content {
 /* Botón para cerrar el modal */
 .close-button {
     position: absolute;
-    top: 10px;
+    top: 15px;
     right: 15px;
     background: none;
     border: none;
@@ -384,9 +384,10 @@ body.dark-mode .close-button:hover {
     color: #ff4081;
 }
 
+/* ESTA ES LA IMAGEN DENTRO DEL MODAL */
 .modal-image-container {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     margin: 0 auto 20px;
     border-radius: 50%;
     overflow: hidden;
@@ -552,8 +553,36 @@ body.dark-mode .main-footer {
     h2 {
         font-size: 2em;
     }
+    .jugador {
+        padding: 15px;
+    }
+    .jugador h3 {
+        font-size: 1.2em;
+    }
+    .jugador p {
+        font-size: 0.9em;
+    }
+    .role-icon {
+        width: 28px;
+        height: 28px;
+        margin: 0 5px;
+    }
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+    /* AJUSTE PARA EL TAMAÑO DE LA IMAGEN EN EL MODAL EN PANTALLAS PEQUEÑAS */
+    .modal-image-container {
+        width: 120px;
+        height: 120px;
+    }
+    .modal-content h3 {
+        font-size: 1.5em;
+    }
+    .modal-content p {
+        font-size: 1em;
+    }
 }
-
 @media (max-width: 480px) {
     body {
         padding: 0;
@@ -601,9 +630,10 @@ body.dark-mode .main-footer {
         width: 95%;
         padding: 20px;
     }
+    /* AJUSTE PARA EL TAMAÑO DE LA IMAGEN EN EL MODAL EN PANTALLAS MUY PEQUEÑAS */
     .modal-image-container {
-        width: 150px;
-        height: 150px;
+        width: 100px;
+        height: 100px;
     }
     .modal-content h3 {
         font-size: 1.5em;
