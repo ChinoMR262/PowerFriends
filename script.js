@@ -7,21 +7,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const musicToggle = document.getElementById('music-toggle');
     const backgroundMusic = document.getElementById('background-music');
 
-    // Elementos del modal
+    // --- Creación del modal de forma robusta ---
     const modalOverlay = document.createElement('div');
     modalOverlay.classList.add('modal-overlay');
-    modalOverlay.innerHTML = `
-        <div class="modal-content">
-            <button class="close-button">&times;</button>
-            <div class="modal-details"></div>
-        </div>
-    `;
-    document.body.appendChild(modalOverlay);
+    
+    const modalContent = document.createElement('div');
+    modalContent.classList.add('modal-content');
+    
+    const closeModalButton = document.createElement('button');
+    closeModalButton.classList.add('close-button');
+    closeModalButton.innerHTML = '&times;';
+    
+    const modalDetails = document.createElement('div');
+    modalDetails.classList.add('modal-details');
 
-    // Referencias a los elementos internos del modal
-    const modalDetails = modalOverlay.querySelector('.modal-details');
-    // Obtenemos una referencia al botón de cerrar del modal.
-    const closeModalButton = modalOverlay.querySelector('.close-button');
+    modalContent.appendChild(closeModalButton);
+    modalContent.appendChild(modalDetails);
+    modalOverlay.appendChild(modalContent);
+
+    document.body.appendChild(modalOverlay);
 
     // Almacenamiento de datos para los jugadores
     let todosLosJugadores = [];
@@ -166,64 +170,59 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Event Listeners ---
-    
-    // Aquí es donde ocurría el error. Nos aseguramos de que los elementos existan.
-    if (searchBar && roleFilter && darkModeToggle && musicToggle && backgroundMusic && closeModalButton && modalOverlay) {
-        // Escuchar cambios en la barra de búsqueda y el filtro de roles
-        searchBar.addEventListener('input', filtrarJugadores);
-        roleFilter.addEventListener('change', filtrarJugadores);
 
-        // Manejo del modo oscuro
-        darkModeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            const isDarkMode = document.body.classList.contains('dark-mode');
-            if (isDarkMode) {
-                localStorage.setItem('theme', 'dark');
-                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            } else {
-                localStorage.setItem('theme', 'light');
-                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-            }
-        });
+    // Escuchar cambios en la barra de búsqueda y el filtro de roles
+    searchBar.addEventListener('input', filtrarJugadores);
+    roleFilter.addEventListener('change', filtrarJugadores);
 
-        // Carga la preferencia de modo oscuro del usuario al cargar la página
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-mode');
+    // Manejo del modo oscuro
+    darkModeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        if (isDarkMode) {
+            localStorage.setItem('theme', 'dark');
             darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+            localStorage.setItem('theme', 'light');
+            darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
         }
+    });
 
-        // Manejo de la música
-        musicToggle.addEventListener('click', () => {
-            if (backgroundMusic.paused) {
-                backgroundMusic.play();
-                musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
-            } else {
-                backgroundMusic.pause();
-                musicToggle.innerHTML = '<i class="fas fa-play"></i>';
-            }
-        });
-
-        // Cierra el modal al hacer clic en el botón de cerrar
-        closeModalButton.addEventListener('click', cerrarModal);
-
-        // Cierra el modal al hacer clic fuera del contenido
-        modalOverlay.addEventListener('click', (event) => {
-            if (event.target === modalOverlay) {
-                cerrarModal();
-            }
-        });
-
-        // Cierra el modal al presionar la tecla 'Esc'
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape' && modalOverlay.classList.contains('visible')) {
-                cerrarModal();
-            }
-        });
-
-        // Cargar los jugadores al iniciar la aplicación
-        cargarJugadores();
-    } else {
-        console.error("No se pudieron encontrar todos los elementos del DOM. La aplicación podría no funcionar correctamente.");
+    // Carga la preferencia de modo oscuro del usuario al cargar la página
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
     }
+
+    // Manejo de la música
+    musicToggle.addEventListener('click', () => {
+        if (backgroundMusic.paused) {
+            backgroundMusic.play();
+            musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+        } else {
+            backgroundMusic.pause();
+            musicToggle.innerHTML = '<i class="fas fa-play"></i>';
+        }
+    });
+
+    // Cierra el modal al hacer clic en el botón de cerrar
+    closeModalButton.addEventListener('click', cerrarModal);
+
+    // Cierra el modal al hacer clic fuera del contenido
+    modalOverlay.addEventListener('click', (event) => {
+        if (event.target === modalOverlay) {
+            cerrarModal();
+        }
+    });
+
+    // Cierra el modal al presionar la tecla 'Esc'
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modalOverlay.classList.contains('visible')) {
+            cerrarModal();
+        }
+    });
+
+    // Cargar los jugadores al iniciar la aplicación
+    cargarJugadores();
 });
