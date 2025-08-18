@@ -29,113 +29,22 @@ header {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Nuevo estilo para el título H1 dentro del encabezado */
+header h1 {
+    color: #007bff; /* Color azul llamativo para el título */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Sombra para que se destaque más */
+}
+
 body.dark-mode header {
     background-color: #FF4081; /* Acento modo oscuro */
 }
 
-h1 {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 2.5em;
-    margin: 0;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Estilos y animación para el título principal */
-.main-title {
-    font-size: 3.5em; /* Hace el título más grande */
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-weight: 700;
-    background: linear-gradient(45deg, #ff69b4, #ff4081);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: pulse 2s infinite ease-in-out;
-}
-
-body.dark-mode .main-title {
-    background: linear-gradient(45deg, #ff4081, #ff69b4);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-/* Animación de pulso para el título */
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-        text-shadow: 0 0 5px rgba(255, 105, 180, 0.4);
-    }
-    50% {
-        transform: scale(1.05);
-        text-shadow: 0 0 15px rgba(255, 105, 180, 0.8);
-    }
-    100% {
-        transform: scale(1);
-        text-shadow: 0 0 5px rgba(255, 105, 180, 0.4);
-    }
-}
-
-header p {
-    font-size: 1.1em;
-    max-width: 600px;
-    margin: 10px auto 0;
-}
-
-/*
-    Estilos para los controles de búsqueda y filtro
-*/
-.controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin: 20px auto;
-    max-width: 900px;
-}
-
-#search-bar,
-#role-filter {
-    padding: 12px 15px;
-    border: 2px solid #ddd;
-    border-radius: 25px;
-    font-size: 1em;
-    transition: all 0.3s ease;
-    background-color: #fff;
-    color: #333;
-}
-
-#search-bar:focus,
-#role-filter:focus {
-    outline: none;
-    border-color: #FF69B4;
-    box-shadow: 0 0 8px rgba(255, 105, 180, 0.5);
-}
-
-body.dark-mode #search-bar,
-body.dark-mode #role-filter {
-    background-color: #333;
-    color: #f8f8f8;
-    border-color: #555;
-}
-
-body.dark-mode #search-bar:focus,
-body.dark-mode #role-filter:focus {
-    border-color: #FF4081;
-    box-shadow: 0 0 8px rgba(255, 64, 129, 0.5);
-}
-
-/*
-    Estilos del botón de modo oscuro
-*/
-.dark-mode-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: #fff;
-    border: 2px solid #ddd;
+/* Estilos para los botones de control (modo oscuro, música) */
+.dark-mode-toggle,
+.music-toggle {
+    background-color: #FF69B4;
+    color: white;
+    border: none;
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -144,119 +53,154 @@ body.dark-mode #role-filter:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 100;
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+    position: fixed;
+    top: 20px;
+    z-index: 1000;
 }
 
-.dark-mode-toggle:hover {
-    transform: scale(1.1) rotate(15deg);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+.dark-mode-toggle {
+    right: 20px;
 }
 
-body.dark-mode .dark-mode-toggle {
-    background-color: #333;
-    border-color: #555;
+.music-toggle {
+    right: 80px;
+}
+
+.dark-mode-toggle:hover,
+.music-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+body.dark-mode .dark-mode-toggle,
+body.dark-mode .music-toggle {
+    background-color: #FF4081;
+}
+
+body.dark-mode .dark-mode-toggle:hover,
+body.dark-mode .music-toggle:hover {
+    background-color: #FF69B4;
+}
+
+
+/* Estilos para la sección principal (main) */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Controles de búsqueda y filtro */
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+body.dark-mode .controls {
+    background-color: rgba(30, 30, 30, 0.8);
+    border: 1px solid rgba(50, 50, 50, 0.3);
+}
+
+.controls input,
+.controls select {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-mode .controls input,
+body.dark-mode .controls select {
+    background-color: #2c2c2c;
+    border-color: #444;
     color: #f8f8f8;
 }
 
-/*
-    Estilos de la lista y las tarjetas de jugadores
-*/
-main {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+.controls input:focus,
+.controls select:focus {
+    border-color: #FF69B4;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
 }
 
-h2 {
-    text-align: center;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 2em;
-    color: #FF69B4;
-    margin: 20px 0;
-}
-
-body.dark-mode h2 {
-    color: #FF4081;
-}
-
+/* Estilos de la lista de jugadores */
 #lista-jugadores {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 30px;
-    padding: 20px 0;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
 }
 
 .jugador {
-    background: linear-gradient(145deg, #f0f0f0, #ffffff);
+    background-color: #fff;
     padding: 25px;
     border-radius: 20px;
-    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.1), -8px -8px 15px rgba(255, 255, 255, 0.8);
     text-align: center;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     cursor: pointer;
-    transition: all 0.4s ease-in-out;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
 }
 
 body.dark-mode .jugador {
-    background: linear-gradient(145deg, #1e1e1e, #2e2e2e);
-    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2), -8px -8px 15px rgba(255, 255, 255, 0.05);
+    background-color: #1e1e1e;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .jugador:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.15), -12px -12px 20px rgba(255, 255, 255, 0.6);
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-.jugador h3 {
+/* Estilos para los íconos de roles dentro de la tarjeta */
+.jugador p {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 10px;
+}
+
+body.dark-mode .jugador p {
+    color: #aaa;
+}
+
+.role-icon-small {
+    margin: 0 5px;
     color: #FF69B4;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    margin-top: 15px;
+    font-size: 1.2em;
 }
 
-body.dark-mode .jugador h3 {
+body.dark-mode .role-icon-small {
     color: #FF4081;
 }
 
-.role-icon {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 10px;
-    border-radius: 15px;
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.jugador:hover .role-icon {
-    transform: scale(1.1) rotate(5deg);
-}
-
-.no-results {
-    text-align: center;
-    grid-column: 1 / -1;
-    font-style: italic;
-    color: #777;
-    padding: 50px;
-}
-
-/*
-    Estilos del modal (pop-up)
-*/
+/* Estilos para el modal */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 2000;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .modal-overlay.visible {
@@ -267,180 +211,137 @@ body.dark-mode .jugador h3 {
 .modal-content {
     background-color: #fff;
     padding: 30px;
-    border-radius: 20px;
+    border-radius: 15px;
     text-align: center;
-    width: 90%;
-    max-width: 450px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     position: relative;
-    transform: scale(0.9);
+    max-width: 500px;
+    width: 90%;
+    transform: scale(0.8);
     transition: transform 0.3s ease;
-}
-
-body.dark-mode .modal-content {
-    background-color: #222;
 }
 
 .modal-overlay.visible .modal-content {
     transform: scale(1);
 }
 
-.close-button {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    background: none;
-    border: none;
-    font-size: 2em;
-    color: #777;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.close-button:hover {
-    color: #FF69B4;
+body.dark-mode .modal-content {
+    background-color: #2c2c2c;
 }
 
 .modal-image-container {
-    margin-bottom: 20px;
+    background-color: #FF69B4;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border: 5px solid #fff;
+}
+
+body.dark-mode .modal-image-container {
+    background-color: #FF4081;
+    border: 5px solid #1e1e1e;
 }
 
 .modal-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 20px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
-    animation: shine 2s infinite ease-in-out;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .modal-content h3 {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    color: #FF4081;
-}
-
-.modal-content p {
-    color: #555;
-    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #333;
 }
 
 body.dark-mode .modal-content h3 {
-    color: #FF69B4;
+    color: #f8f8f8;
+}
+
+.modal-content p {
+    color: #666;
+    margin-bottom: 20px;
 }
 
 body.dark-mode .modal-content p {
-    color: #bbb;
+    color: #aaa;
 }
 
-/* Estilos de los nuevos botones de rol en el modal */
 .modal-roles-container {
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-top: 20px;
-    margin-bottom: 10px;
+    flex-wrap: wrap;
 }
 
 .role-button {
     background-color: #f0f0f0;
-    border: 2px solid #ddd;
-    border-radius: 50px;
+    border: 1px solid #ccc;
     padding: 8px 15px;
-    font-size: 0.9em;
+    border-radius: 20px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: bold;
     color: #333;
 }
 
-.role-button:hover {
-    background-color: #FF69B4;
-    color: white;
-    border-color: #FF69B4;
-}
-
-.role-button.active-role {
-    background-color: #FF4081;
-    color: white;
-    border-color: #FF4081;
-    transform: scale(1.1);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
 body.dark-mode .role-button {
-    background-color: #333;
+    background-color: #444;
+    border: 1px solid #666;
     color: #f8f8f8;
-    border-color: #555;
+}
+
+.role-button:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-2px);
 }
 
 body.dark-mode .role-button:hover {
-    background-color: #FF4081;
-    border-color: #FF4081;
+    background-color: #555;
 }
 
-body.dark-mode .role-button.active-role {
-    background-color: #FF69B4;
-    border-color: #FF69B4;
-    color: white;
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2em;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: color 0.2s ease;
 }
 
-/*
-    Animaciones
-*/
-@keyframes shine {
-    0% {
-        box-shadow: 0 0 15px 5px rgba(255, 105, 180, 0.2);
+.close-button:hover {
+    color: #555;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
     }
-    50% {
-        box-shadow: 0 0 25px 10px rgba(255, 105, 180, 0.4);
-    }
-    100% {
-        box-shadow: 0 0 15px 5px rgba(255, 105, 180, 0.2);
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-/* Estilos para el pie de página */
-.footer {
-    text-align: center;
-    padding: 20px;
-    background-color: #f0f0f0;
-    margin-top: 40px;
-    border-top: 1px solid #ddd;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+@keyframes fadeInOverlay {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-body.dark-mode .footer {
-    background-color: #222;
-    border-top: 1px solid #444;
-}
-
-/*
-    Media Queries para Responsive Design
-*/
-@media (max-width: 768px) {
-    header {
-        padding: 60px 10px;
-    }
-
-    h1 {
-        font-size: 2em;
-    }
-
-    .controls {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    #search-bar,
-    #role-filter {
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    #lista-jugadores {
-        grid-template-columns: 1fr;
-    }
-
-    .jugador {
-        padding: 20px;
-    }
+@keyframes scaleUp {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
 }
