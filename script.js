@@ -4,8 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchBar = document.getElementById('search-bar');
     const roleFilter = document.getElementById('role-filter');
     const darkModeToggle = document.getElementById('dark-mode-toggle');
-    const musicToggle = document.getElementById('music-toggle');
-    const backgroundMusic = document.getElementById('background-music');
 
     // Elementos del modal
     const modalOverlay = document.createElement('div');
@@ -32,133 +30,135 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     async function cargarJugadores() {
         try {
-            // Asegurarse de que 'jugadores.json' esté disponible en el mismo directorio.
-            const response = await fetch('jugadores.json'); 
+            const response = await fetch('jugadores.json');
             if (!response.ok) {
-                throw new Error(`Error al cargar el archivo JSON: ${response.statusText}`);
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
             todosLosJugadores = await response.json();
-            mostrarJugadores(); // Muestra los jugadores al cargar
+            mostrarJugadores(todosLosJugadores);
         } catch (error) {
-            console.error('Error:', error);
-            // Muestra un mensaje de error en la página para el usuario
-            listaJugadoresDiv.innerHTML = `<p class="error-message">Hubo un problema al cargar los datos. Por favor, inténtelo de nuevo más tarde.</p>`;
+            console.error('No se pudo cargar el archivo jugadores.json:', error);
+            listaJugadoresDiv.innerHTML = '<p class="error-message">Hubo un problema al cargar los datos de los jugadores. Por favor, inténtalo de nuevo más tarde.</p>';
         }
     }
 
     /**
-     * Muestra una tarjeta de jugador en el DOM.
-     * @param {object} jugador - El objeto de datos del jugador.
+     * Muestra las tarjetas de los jugadores en el DOM.
+     * Ahora, cada tag de rol es clickeable para abrir el modal.
+     * @param {Array} jugadores - Array de objetos de jugadores.
      */
-    function crearTarjetaJugador(jugador) {
-        const card = document.createElement('div');
-        card.classList.add('jugador-card');
-        
-        // Contenido HTML de la tarjeta
-        card.innerHTML = `
-            <h3>${jugador.nombre}</h3>
-            <div class="roles">
-                ${jugador.lineas.map(linea => `<span class="role-tag">${linea}</span>`).join('')}
-            </div>
-        `;
-        
-        // Añade el evento de clic para mostrar el modal con los detalles
-        card.addEventListener('click', () => {
-            mostrarModal(jugador);
+    function mostrarJugadores(jugadores) {
+        listaJugadoresDiv.innerHTML = ''; // Limpiar el contenedor
+        if (jugadores.length === 0) {
+            listaJugadoresDiv.innerHTML = '<p class="no-results-message">No se encontraron jugadores que coincidan con la búsqueda o filtro.</p>';
+            return;
+        }
+
+        jugadores.forEach(jugador => {
+            const card = document.createElement('div');
+            card.classList.add('jugador-card');
+            
+            const rolesHtml = jugador.lineas.map(linea => `<span class="role-tag" data-role="${linea}">${linea}</span>`).join('');
+            
+            card.innerHTML = `
+                <h3>${jugador.nombre}</h3>
+                <div class="roles">${rolesHtml}</div>
+            `;
+            
+            listaJugadoresDiv.appendChild(card);
+
+            // Se añaden los event listeners a cada rol individual, no a la tarjeta completa.
+            card.querySelectorAll('.role-tag').forEach(tag => {
+                tag.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Evita que el clic se propague a la tarjeta padre
+                    const selectedRole = tag.getAttribute('data-role');
+                    mostrarModal(jugador, selectedRole);
+                });
+            });
         });
-        
-        return card;
     }
 
     /**
-     * Filtra y muestra la lista de jugadores basándose en la búsqueda y el filtro de rol.
+     * Filtra los jugadores basados en el texto de búsqueda y el rol seleccionado.
      */
-    function mostrarJugadores() {
-        const searchTerm = searchBar.value.toLowerCase();
+    function filtrarJugadores() {
+        const searchText = searchBar.value.toLowerCase();
         const selectedRole = roleFilter.value;
 
-        // Filtra los jugadores según la barra de búsqueda y el rol seleccionado
         const jugadoresFiltrados = todosLosJugadores.filter(jugador => {
-            const nombreCoincide = jugador.nombre.toLowerCase().includes(searchTerm);
+            const nombreCoincide = jugador.nombre.toLowerCase().includes(searchText);
             const rolCoincide = selectedRole === 'all' || jugador.lineas.includes(selectedRole);
             return nombreCoincide && rolCoincide;
         });
 
-        // Limpia la lista actual antes de renderizar los nuevos jugadores
-        listaJugadoresDiv.innerHTML = '';
-        
-        if (jugadoresFiltrados.length === 0) {
-            listaJugadoresDiv.innerHTML = `<p class="no-results">No se encontraron jugadores que coincidan con la búsqueda.</p>`;
-        } else {
-            // Renderiza cada jugador filtrado en el DOM
-            jugadoresFiltrados.forEach(jugador => {
-                const card = crearTarjetaJugador(jugador);
-                listaJugadoresDiv.appendChild(card);
-            });
-        }
-    }
-
-    /**
-     * Muestra el modal con los detalles de un jugador específico.
-     * @param {object} jugador - El objeto de datos del jugador a mostrar.
-     */
-    function mostrarModal(jugador) {
-        // Limpia el contenido anterior del modal
-        modalDetails.innerHTML = '';
-        
-        // Crea los elementos de la imagen y la descripción para el modal
-        const imagenContainer = document.createElement('div');
-        imagenContainer.classList.add('modal-image-container');
-        // Usa una URL de imagen de un servicio de marcadores de posición
-        // Reemplazar "placeholder" en el texto con el nombre del jugador si es necesario para una imagen más relevante
-        imagenContainer.innerHTML = `<img src="https://placehold.co/200x200/ff69b4/fff?text=${jugador.nombre}" alt="Imagen de perfil de ${jugador.nombre}">`;
-        
-        const nombreJugador = document.createElement('h3');
-        nombreJugador.textContent = jugador.nombre;
-
-        // Renderiza la descripción para cada rol del jugador
-        const descripcionesDiv = document.createElement('div');
-        for (const linea in jugador.descripciones) {
-            if (Object.prototype.hasOwnProperty.call(jugador.descripciones, linea)) {
-                const descripcionHtml = `
-                    <div class="role-description">
-                        <h4>${linea}</h4>
-                        <p>${jugador.descripciones[linea]}</p>
-                    </div>
-                `;
-                descripcionesDiv.innerHTML += descripcionHtml;
-            }
-        }
-        
-        // Añade los elementos al modal
-        modalDetails.appendChild(imagenContainer);
-        modalDetails.appendChild(nombreJugador);
-        modalDetails.appendChild(descripcionesDiv);
-        
-        // Hace el modal visible
-        modalOverlay.classList.add('visible');
+        mostrarJugadores(jugadoresFiltrados);
     }
     
     /**
-     * Cierra el modal de detalles del jugador.
+     * Muestra el modal de perfil de jugador con la información de un jugador específico.
+     * @param {Object} jugador - Objeto del jugador a mostrar.
+     * @param {string} selectedRole - El rol específico que fue clickeado para mostrar su imagen.
+     */
+    function mostrarModal(jugador, selectedRole) {
+        // Limpiar el contenido del modal
+        modalDetails.innerHTML = '';
+
+        // Contenedor de la imagen del rol clickeado
+        const imageContainer = document.createElement('div');
+        imageContainer.classList.add('modal-image-container');
+        // Usa la imagen del rol clickeado
+        const imagePath = `Icon/${selectedRole}.png`;
+        const roleImage = document.createElement('img');
+        roleImage.src = imagePath;
+        roleImage.alt = `Imagen del rol ${selectedRole}`;
+        
+        // Manejo de errores en caso de que la imagen no exista
+        roleImage.onerror = () => {
+            roleImage.src = 'https://placehold.co/200x200/ff69b4/ffffff?text=Icono+no+encontrado';
+            roleImage.alt = 'Imagen por defecto: icono no encontrado';
+        };
+
+        imageContainer.appendChild(roleImage);
+        
+        // Título del modal
+        const title = document.createElement('h3');
+        title.textContent = jugador.nombre;
+
+        // Descripciones de los roles
+        const descriptions = document.createElement('div');
+        Object.entries(jugador.descripciones).forEach(([role, description]) => {
+            const roleDescription = document.createElement('div');
+            roleDescription.classList.add('role-description');
+            roleDescription.innerHTML = `<h4>${role}</h4><p>${description}</p>`;
+            descriptions.appendChild(roleDescription);
+        });
+
+        modalDetails.appendChild(imageContainer);
+        modalDetails.appendChild(title);
+        modalDetails.appendChild(descriptions);
+        
+        // Mostrar el modal
+        modalOverlay.classList.add('visible');
+    }
+
+    /**
+     * Cierra el modal de perfil.
      */
     function cerrarModal() {
         modalOverlay.classList.remove('visible');
     }
 
-    // --- Manejadores de eventos ---
+    // --- Event Listeners ---
 
-    // Filtra la lista de jugadores cuando el usuario escribe en la barra de búsqueda
-    searchBar.addEventListener('input', mostrarJugadores);
+    // Escuchar cambios en la barra de búsqueda y el filtro de roles
+    searchBar.addEventListener('input', filtrarJugadores);
+    roleFilter.addEventListener('change', filtrarJugadores);
 
-    // Filtra la lista de jugadores cuando se cambia la opción del filtro de rol
-    roleFilter.addEventListener('change', mostrarJugadores);
-    
     // Manejo del modo oscuro
     darkModeToggle.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
-        // Guarda la preferencia en el almacenamiento local
-        if (document.body.classList.contains('dark-mode')) {
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        if (isDarkMode) {
             localStorage.setItem('theme', 'dark');
             darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
         } else {
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cerrarModal();
         }
     });
-    
-    // Llama a la función de carga de datos para iniciar la aplicación
+
+    // Cargar los jugadores al iniciar la aplicación
     cargarJugadores();
 });
