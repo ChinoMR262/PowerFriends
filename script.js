@@ -1,5 +1,8 @@
+// Espera a que todo el contenido del DOM (Document Object Model) esté cargado.
 document.addEventListener('DOMContentLoaded', () => {
-    // Definición de las constantes y variables del DOM
+
+    // --- Referencias a los elementos del DOM ---
+    // Es crucial que estos elementos existan en tu archivo index.html
     const listaJugadoresDiv = document.getElementById('lista-jugadores');
     const searchBar = document.getElementById('search-bar');
     const roleFilter = document.getElementById('role-filter');
@@ -7,30 +10,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const musicToggle = document.getElementById('music-toggle');
     const backgroundMusic = document.getElementById('background-music');
 
-    // --- Creación del modal de forma robusta ---
+    // --- Creación dinámica del modal ---
+    // Este método es más robusto y garantiza que los elementos existan en el DOM
     const modalOverlay = document.createElement('div');
     modalOverlay.classList.add('modal-overlay');
-    
+
     const modalContent = document.createElement('div');
     modalContent.classList.add('modal-content');
-    
+
     const closeModalButton = document.createElement('button');
     closeModalButton.classList.add('close-button');
-    closeModalButton.innerHTML = '&times;';
-    
+    closeModalButton.innerHTML = '&times;'; // Símbolo de "cerrar"
+
     const modalDetails = document.createElement('div');
     modalDetails.classList.add('modal-details');
 
     modalContent.appendChild(closeModalButton);
     modalContent.appendChild(modalDetails);
     modalOverlay.appendChild(modalContent);
-
     document.body.appendChild(modalOverlay);
 
-    // Almacenamiento de datos para los jugadores
+    // Almacenamiento de los datos de los jugadores en una variable global
     let todosLosJugadores = [];
 
-    // --- Funciones de la aplicación ---
+    // --- Funciones principales de la aplicación ---
 
     /**
      * Carga los datos de los jugadores desde el archivo JSON.
@@ -41,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('jugadores.json');
             
             if (!response.ok) {
-                // Si la respuesta no es OK (por ejemplo, 404 Not Found), lanzamos un error.
                 throw new Error(`Error HTTP: ${response.status}`);
             }
             
@@ -49,8 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
             todosLosJugadores = data;
             
             if (todosLosJugadores.length === 0) {
-                console.warn('El archivo jugadores.json se cargó correctamente, pero está vacío.');
-                listaJugadoresDiv.innerHTML = '<p class="no-results-message">El archivo de jugadores está vacío.</p>';
+                console.warn('El archivo de jugadores se cargó, pero está vacío.');
+                if (listaJugadoresDiv) {
+                    listaJugadoresDiv.innerHTML = '<p class="no-results-message">El archivo de jugadores está vacío.</p>';
+                }
                 return;
             }
             
@@ -59,7 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
             
         } catch (error) {
             console.error('No se pudo cargar el archivo jugadores.json:', error);
-            listaJugadoresDiv.innerHTML = '<p class="error-message">Hubo un problema al cargar los datos de los jugadores. Por favor, asegúrate de que el archivo jugadores.json existe y es accesible.</p>';
+            if (listaJugadoresDiv) {
+                listaJugadoresDiv.innerHTML = '<p class="error-message">Hubo un problema al cargar los datos de los jugadores. Por favor, asegúrate de que el archivo jugadores.json existe y es accesible.</p>';
+            }
         }
     }
     
@@ -67,6 +73,8 @@ document.addEventListener('DOMContentLoaded', () => {
      * Filtra los jugadores según la barra de búsqueda y el filtro de roles.
      */
     function filtrarJugadores() {
+        if (!searchBar || !roleFilter) return; // Asegura que los elementos existan
+
         const searchText = searchBar.value.toLowerCase();
         const selectedRole = roleFilter.value;
 
@@ -81,10 +89,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * Muestra las tarjetas de los jugadores en el DOM.
-     * Ahora, cada tag de rol es clickeable para abrir el modal.
      * @param {Array} jugadores - Array de objetos de jugadores.
      */
     function mostrarJugadores(jugadores) {
+        if (!listaJugadoresDiv) return;
+
         listaJugadoresDiv.innerHTML = ''; // Limpiar el contenedor
         if (jugadores.length === 0) {
             listaJugadoresDiv.innerHTML = '<p class="no-results-message">No se encontraron jugadores que coincidan con la búsqueda o filtro.</p>';
@@ -104,10 +113,10 @@ document.addEventListener('DOMContentLoaded', () => {
             
             listaJugadoresDiv.appendChild(card);
 
-            // Se añaden los event listeners a cada rol individual, no a la tarjeta completa.
+            // Añadir event listeners a cada rol para abrir el modal.
             card.querySelectorAll('.role-tag').forEach(tag => {
                 tag.addEventListener('click', (event) => {
-                    event.stopPropagation(); // Evita que el clic se propague a la tarjeta padre
+                    event.stopPropagation(); // Evita que el clic se propague
                     const selectedRole = tag.getAttribute('data-role');
                     mostrarModal(jugador, selectedRole);
                 });
@@ -116,36 +125,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Muestra el modal de perfil de jugador con la información de un jugador específico.
+     * Muestra el modal con la información detallada del jugador.
      * @param {Object} jugador - Objeto del jugador a mostrar.
-     * @param {string} selectedRole - El rol específico que fue clickeado para mostrar su imagen.
+     * @param {string} selectedRole - Rol clickeado para mostrar la imagen.
      */
     function mostrarModal(jugador, selectedRole) {
-        // Limpiar el contenido del modal
-        modalDetails.innerHTML = '';
+        if (!modalDetails || !modalOverlay) return;
 
-        // Contenedor de la imagen del rol clickeado
+        modalDetails.innerHTML = ''; // Limpiar contenido previo
+
+        // Creación del contenedor de la imagen
         const imageContainer = document.createElement('div');
         imageContainer.classList.add('modal-image-container');
         
-        // Usar la ruta de imagen proporcionada por el usuario
-        // ¡Importante!: La carpeta 'Icon' y el nombre de la imagen deben coincidir EXACTAMENTE con los de tu repositorio.
         const roleImage = document.createElement('img');
         roleImage.src = `Icon/${selectedRole}.png`;
         roleImage.alt = `Imagen del rol ${selectedRole}`;
-        // En caso de que la imagen no se encuentre, usa un placeholder.
+        
+        // Manejo de error si la imagen no existe
         roleImage.onerror = () => {
             console.error(`Error al cargar la imagen: Icon/${selectedRole}.png`);
+            // Usa una imagen de placeholder si no encuentra la original
             roleImage.src = `https://placehold.co/200x200/ff69b4/fff?text=${selectedRole.toUpperCase()}`;
         };
 
         imageContainer.appendChild(roleImage);
         
-        // Título del modal
+        // Título y descripciones
         const title = document.createElement('h3');
         title.textContent = jugador.nombre;
 
-        // Descripciones de los roles
         const descriptions = document.createElement('div');
         Object.entries(jugador.descripciones).forEach(([role, description]) => {
             const roleDescription = document.createElement('div');
@@ -158,7 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
         modalDetails.appendChild(title);
         modalDetails.appendChild(descriptions);
         
-        // Mostrar el modal
         modalOverlay.classList.add('visible');
     }
 
@@ -166,17 +174,16 @@ document.addEventListener('DOMContentLoaded', () => {
      * Cierra el modal de perfil.
      */
     function cerrarModal() {
+        if (!modalOverlay) return;
         modalOverlay.classList.remove('visible');
     }
 
-    // --- Event Listeners ---
+    // --- Event Listeners principales ---
+    // Usamos el operador de "optional chaining" (?.) para evitar errores si un elemento no existe.
+    searchBar?.addEventListener('input', filtrarJugadores);
+    roleFilter?.addEventListener('change', filtrarJugadores);
 
-    // Escuchar cambios en la barra de búsqueda y el filtro de roles
-    searchBar.addEventListener('input', filtrarJugadores);
-    roleFilter.addEventListener('change', filtrarJugadores);
-
-    // Manejo del modo oscuro
-    darkModeToggle.addEventListener('click', () => {
+    darkModeToggle?.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
         const isDarkMode = document.body.classList.contains('dark-mode');
         if (isDarkMode) {
@@ -195,8 +202,8 @@ document.addEventListener('DOMContentLoaded', () => {
         darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
     }
 
-    // Manejo de la música
-    musicToggle.addEventListener('click', () => {
+    musicToggle?.addEventListener('click', () => {
+        if (!backgroundMusic) return;
         if (backgroundMusic.paused) {
             backgroundMusic.play();
             musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
@@ -205,24 +212,22 @@ document.addEventListener('DOMContentLoaded', () => {
             musicToggle.innerHTML = '<i class="fas fa-play"></i>';
         }
     });
-
-    // Cierra el modal al hacer clic en el botón de cerrar
+    
+    // Estos listeners están en los elementos creados dinámicamente, por lo que su referencia siempre será válida
     closeModalButton.addEventListener('click', cerrarModal);
 
-    // Cierra el modal al hacer clic fuera del contenido
     modalOverlay.addEventListener('click', (event) => {
         if (event.target === modalOverlay) {
             cerrarModal();
         }
     });
 
-    // Cierra el modal al presionar la tecla 'Esc'
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape' && modalOverlay.classList.contains('visible')) {
             cerrarModal();
         }
     });
 
-    // Cargar los jugadores al iniciar la aplicación
+    // Inicia la carga de datos al cargar la página
     cargarJugadores();
 });
