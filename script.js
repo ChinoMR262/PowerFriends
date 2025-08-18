@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Referencias a los elementos internos del modal
     const modalDetails = modalOverlay.querySelector('.modal-details');
-    // Este era el punto de error. Nos aseguramos de que el botón exista antes de intentar usarlo.
+    // Obtenemos una referencia al botón de cerrar del modal.
     const closeModalButton = modalOverlay.querySelector('.close-button');
 
     // Almacenamiento de datos para los jugadores
@@ -166,65 +166,64 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Event Listeners ---
-
-    // Escuchar cambios en la barra de búsqueda y el filtro de roles
-    searchBar.addEventListener('input', filtrarJugadores);
-    roleFilter.addEventListener('change', filtrarJugadores);
-
-    // Manejo del modo oscuro
-    darkModeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        const isDarkMode = document.body.classList.contains('dark-mode');
-        if (isDarkMode) {
-            localStorage.setItem('theme', 'dark');
-            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-        } else {
-            localStorage.setItem('theme', 'light');
-            darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-        }
-    });
-
-    // Carga la preferencia de modo oscuro del usuario al cargar la página
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-        darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-    }
-
-    // Manejo de la música
-    musicToggle.addEventListener('click', () => {
-        if (backgroundMusic.paused) {
-            backgroundMusic.play();
-            musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
-        } else {
-            backgroundMusic.pause();
-            musicToggle.innerHTML = '<i class="fas fa-play"></i>';
-        }
-    });
-
-    // Cierra el modal al hacer clic en el botón de cerrar
-    // Añadimos una verificación para evitar el error 'null'
-    if (closeModalButton) {
-      closeModalButton.addEventListener('click', cerrarModal);
-    } else {
-      console.error("El botón de cerrar el modal no fue encontrado. El modal puede no funcionar correctamente.");
-    }
     
+    // Aquí es donde ocurría el error. Nos aseguramos de que los elementos existan.
+    if (searchBar && roleFilter && darkModeToggle && musicToggle && backgroundMusic && closeModalButton && modalOverlay) {
+        // Escuchar cambios en la barra de búsqueda y el filtro de roles
+        searchBar.addEventListener('input', filtrarJugadores);
+        roleFilter.addEventListener('change', filtrarJugadores);
 
-    // Cierra el modal al hacer clic fuera del contenido
-    modalOverlay.addEventListener('click', (event) => {
-        if (event.target === modalOverlay) {
-            cerrarModal();
+        // Manejo del modo oscuro
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            if (isDarkMode) {
+                localStorage.setItem('theme', 'dark');
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('theme', 'light');
+                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+
+        // Carga la preferencia de modo oscuro del usuario al cargar la página
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
         }
-    });
 
-    // Cierra el modal al presionar la tecla 'Esc'
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && modalOverlay.classList.contains('visible')) {
-            cerrarModal();
-        }
-    });
+        // Manejo de la música
+        musicToggle.addEventListener('click', () => {
+            if (backgroundMusic.paused) {
+                backgroundMusic.play();
+                musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
+                backgroundMusic.pause();
+                musicToggle.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        });
 
-    // Cargar los jugadores al iniciar la aplicación
-    cargarJugadores();
+        // Cierra el modal al hacer clic en el botón de cerrar
+        closeModalButton.addEventListener('click', cerrarModal);
+
+        // Cierra el modal al hacer clic fuera del contenido
+        modalOverlay.addEventListener('click', (event) => {
+            if (event.target === modalOverlay) {
+                cerrarModal();
+            }
+        });
+
+        // Cierra el modal al presionar la tecla 'Esc'
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && modalOverlay.classList.contains('visible')) {
+                cerrarModal();
+            }
+        });
+
+        // Cargar los jugadores al iniciar la aplicación
+        cargarJugadores();
+    } else {
+        console.error("No se pudieron encontrar todos los elementos del DOM. La aplicación podría no funcionar correctamente.");
+    }
 });
