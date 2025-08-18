@@ -4,8 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchBar = document.getElementById('search-bar');
     const roleFilter = document.getElementById('role-filter');
     const darkModeToggle = document.getElementById('dark-mode-toggle');
-    const musicToggle = document.getElementById('music-toggle');
-    const backgroundMusic = document.getElementById('background-music');
 
     // Elementos del modal
     const modalOverlay = document.createElement('div');
@@ -34,105 +32,48 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await fetch('jugadores.json');
             if (!response.ok) {
-                throw new Error('No se pudo cargar el archivo jugadores.json');
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
             todosLosJugadores = await response.json();
             mostrarJugadores(todosLosJugadores);
         } catch (error) {
-            console.error('Error al cargar los datos:', error);
-            // Muestra un mensaje amigable al usuario en caso de error
-            listaJugadoresDiv.innerHTML = '<p class="no-results">Error al cargar los datos de los jugadores. Por favor, inténtalo de nuevo más tarde.</p>';
+            console.error('No se pudo cargar el archivo jugadores.json:', error);
+            listaJugadoresDiv.innerHTML = '<p class="error-message">Hubo un problema al cargar los datos de los jugadores. Por favor, inténtalo de nuevo más tarde.</p>';
         }
     }
 
     /**
-     * Renderiza la lista de jugadores en el DOM.
-     * @param {Array<Object>} jugadores - El array de objetos de jugadores a mostrar.
+     * Muestra las tarjetas de los jugadores en el DOM.
+     * @param {Array} jugadores - Array de objetos de jugadores.
      */
     function mostrarJugadores(jugadores) {
-        listaJugadoresDiv.innerHTML = '';
+        listaJugadoresDiv.innerHTML = ''; // Limpiar el contenedor
         if (jugadores.length === 0) {
-            listaJugadoresDiv.innerHTML = '<p class="no-results">No se encontraron jugadores que coincidan con la búsqueda o el filtro.</p>';
+            listaJugadoresDiv.innerHTML = '<p class="no-results-message">No se encontraron jugadores que coincidan con la búsqueda o filtro.</p>';
             return;
         }
 
-        jugadores.forEach((jugador, index) => {
-            const jugadorCard = document.createElement('div');
-            jugadorCard.classList.add('jugador');
-            jugadorCard.dataset.index = index;
-
-            // Usa un placeholder si no hay URL de imagen o una imagen estática
-            const imageUrl = `https://placehold.co/100x100/ff69b4/FFF?text=${jugador.nombre}`;
-
-            const rolesHtml = jugador.lineas.map(linea => `
-                <img src="assets/icons/${linea.toLowerCase()}.png" alt="${linea} icon" class="role-icon" title="${linea}">
-            `).join('');
-
-            jugadorCard.innerHTML = `
-                <img src="${imageUrl}" alt="Avatar de ${jugador.nombre}" class="player-avatar">
+        jugadores.forEach(jugador => {
+            const card = document.createElement('div');
+            card.classList.add('jugador-card');
+            
+            // Crea los tags de roles dinámicamente
+            const roleTags = jugador.lineas.map(linea => `<span class="role-tag">${linea}</span>`).join('');
+            
+            card.innerHTML = `
                 <h3>${jugador.nombre}</h3>
-                <p>Roles: ${rolesHtml}</p>
+                <div class="roles">${roleTags}</div>
             `;
             
-            jugadorCard.addEventListener('click', () => mostrarModal(jugador, imageUrl));
-            listaJugadoresDiv.appendChild(jugadorCard);
+            // Agrega el evento de clic para mostrar el modal
+            card.addEventListener('click', () => mostrarModal(jugador));
+            
+            listaJugadoresDiv.appendChild(card);
         });
     }
 
     /**
-     * Muestra el modal con los detalles del jugador.
-     * @param {Object} jugador - El objeto del jugador a mostrar.
-     * @param {string} imageUrl - La URL de la imagen del jugador.
-     */
-    function mostrarModal(jugador, imageUrl) {
-        // Genera los botones de roles y sus descripciones
-        const rolesHtml = jugador.lineas.map(linea => `
-            <button class="role-button" data-role="${linea}">
-                <img src="assets/icons/${linea.toLowerCase()}.png" alt="${linea} icon" class="role-icon-small">
-                ${linea}
-            </button>
-        `).join('');
-
-        modalDetails.innerHTML = `
-            <div class="modal-image-container">
-                <img src="${imageUrl}" alt="Avatar de ${jugador.nombre}" class="modal-image">
-            </div>
-            <h3>${jugador.nombre}</h3>
-            <p>${jugador.descripcion || 'Sin descripción disponible.'}</p>
-            <div class="modal-roles-container">
-                ${rolesHtml}
-            </div>
-            <div class="role-description-container">
-                <h4>Detalles de Rol</h4>
-                <p class="role-description-text">Haz clic en un rol para ver su descripción.</p>
-            </div>
-        `;
-
-        // Añade el evento de clic a cada botón de rol
-        const roleButtons = modalDetails.querySelectorAll('.role-button');
-        const roleDescriptionText = modalDetails.querySelector('.role-description-text');
-        
-        roleButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const role = button.dataset.role;
-                const description = jugador.descripciones[role];
-                roleDescriptionText.textContent = description || 'Descripción no encontrada.';
-            });
-        });
-
-        // Muestra el modal
-        modalOverlay.classList.add('visible');
-    }
-
-    /**
-     * Oculta el modal.
-     */
-    function cerrarModal() {
-        modalOverlay.classList.remove('visible');
-    }
-
-    /**
-     * Filtra los jugadores según el texto de búsqueda y el rol seleccionado.
+     * Filtra los jugadores basados en el texto de búsqueda y el rol seleccionado.
      */
     function filtrarJugadores() {
         const searchText = searchBar.value.toLowerCase();
@@ -146,23 +87,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
         mostrarJugadores(jugadoresFiltrados);
     }
+    
+    /**
+     * Muestra el modal de perfil de jugador con la información de un jugador específico.
+     * @param {Object} jugador - Objeto del jugador a mostrar.
+     */
+    function mostrarModal(jugador) {
+        // Limpiar el contenido del modal
+        modalDetails.innerHTML = '';
 
-    // --- Manejo de eventos ---
+        // Contenedor de la imagen (podemos agregar una imagen placeholder por ahora)
+        const imageContainer = document.createElement('div');
+        imageContainer.classList.add('modal-image-container');
+        imageContainer.innerHTML = `<img src="https://placehold.co/200x200/ff69b4/ffffff?text=${jugador.nombre}" alt="Imagen de ${jugador.nombre}">`;
+        
+        // Título del modal
+        const title = document.createElement('h3');
+        title.textContent = jugador.nombre;
 
-    // Manejo del filtro y la búsqueda
+        // Descripciones de los roles
+        const descriptions = document.createElement('div');
+        Object.entries(jugador.descripciones).forEach(([role, description]) => {
+            const roleDescription = document.createElement('div');
+            roleDescription.classList.add('role-description');
+            roleDescription.innerHTML = `<h4>${role}</h4><p>${description}</p>`;
+            descriptions.appendChild(roleDescription);
+        });
+
+        modalDetails.appendChild(imageContainer);
+        modalDetails.appendChild(title);
+        modalDetails.appendChild(descriptions);
+        
+        // Mostrar el modal
+        modalOverlay.classList.add('visible');
+    }
+
+    /**
+     * Cierra el modal de perfil.
+     */
+    function cerrarModal() {
+        modalOverlay.classList.remove('visible');
+    }
+
+    // --- Event Listeners ---
+
+    // Escuchar cambios en la barra de búsqueda y el filtro de roles
     searchBar.addEventListener('input', filtrarJugadores);
     roleFilter.addEventListener('change', filtrarJugadores);
 
     // Manejo del modo oscuro
     darkModeToggle.addEventListener('click', () => {
-        if (document.body.classList.contains('dark-mode')) {
-            document.body.classList.remove('dark-mode');
-            localStorage.setItem('theme', 'light');
-            darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-        } else {
-            document.body.classList.add('dark-mode');
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        if (isDarkMode) {
             localStorage.setItem('theme', 'dark');
             darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+            localStorage.setItem('theme', 'light');
+            darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
         }
     });
 
@@ -172,17 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('dark-mode');
         darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
     }
-
-    // Manejo de la música
-    musicToggle.addEventListener('click', () => {
-        if (backgroundMusic.paused) {
-            backgroundMusic.play();
-            musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
-        } else {
-            backgroundMusic.pause();
-            musicToggle.innerHTML = '<i class="fas fa-play"></i>';
-        }
-    });
 
     // Cierra el modal al hacer clic en el botón de cerrar
     closeModalButton.addEventListener('click', cerrarModal);
@@ -201,6 +172,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Inicia la aplicación cargando los jugadores
+    // Cargar los jugadores al iniciar la aplicación
     cargarJugadores();
 });

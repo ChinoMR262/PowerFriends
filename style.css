@@ -27,294 +27,202 @@ header {
     color: #fff;
     margin-bottom: 40px;
     transition: background-color 0.4s ease, color 0.4s ease;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-body.dark-mode header {
-    background-color: #ff4081; /* Acento modo oscuro: rosa más oscuro */
-    color: #f8f8f8;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
 }
 
 header h1 {
     font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 4.5em; /* Título más grande */
-    margin: 0;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    transition: transform 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
-    animation: pulse 2s infinite alternate;
-}
-
-header h1:hover {
-    transform: scale(1.05);
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+    font-size: 3em;
+    margin-bottom: 10px;
 }
 
 header p {
     font-size: 1.2em;
-    margin-top: 15px;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    color: #ffeef8; /* Un tono más claro para el texto del header en modo claro */
-    transition: color 0.4s ease;
-}
-
-body.dark-mode header p {
-    color: #fde2ec; /* Un tono más claro para el texto del header en modo oscuro */
-}
-
-/* Contenedor principal de la página */
-main {
-    max-width: 1200px;
+    max-width: 600px;
     margin: 0 auto;
-    padding: 20px;
 }
 
-/* Estilos para los títulos secundarios */
-h2 {
-    color: #334e68; /* Texto h2 modo claro */
-    text-align: center;
-    margin-top: 40px;
-    margin-bottom: 30px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 2.5em;
-    transition: color 0.4s ease;
+body.dark-mode header {
+    background-color: #ff4081; /* Acento modo oscuro: rosa más oscuro */
 }
 
-body.dark-mode h2 {
-    color: #e2e8f0; /* Texto h2 modo oscuro */
-}
-
-/* Contenedor de los controles de búsqueda y filtro */
+/* Estilos para los controles de búsqueda y filtro */
 .controls {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;
+    align-items: center;
+    gap: 20px;
     margin-bottom: 40px;
 }
 
-#search-bar, #role-filter {
+.controls input,
+.controls select {
     padding: 12px 20px;
+    border: 2px solid #ccc;
+    border-radius: 30px;
     font-size: 1em;
-    border: 2px solid #e0e6ed;
-    border-radius: 25px;
     background-color: #fff;
     color: #334e68;
-    transition: all 0.3s ease;
-    flex-grow: 1;
-    max-width: 300px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-body.dark-mode #search-bar, body.dark-mode #role-filter {
+body.dark-mode .controls input,
+body.dark-mode .controls select {
     background-color: #2d3748;
     border-color: #4a5568;
     color: #e2e8f0;
 }
 
-#search-bar::placeholder {
+.controls input:focus,
+.controls select:focus {
+    outline: none;
+    border-color: #ff69b4;
+    box-shadow: 0 0 8px rgba(255, 105, 180, 0.4);
+}
+
+/* Estilos para la sección principal y lista de jugadores */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+main h2 {
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #ff69b4;
+    transition: color 0.4s ease;
+}
+
+body.dark-mode main h2 {
+    color: #ff4081;
+}
+
+#lista-jugadores {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 20px 0;
+}
+
+/* Estilos para las tarjetas de jugador */
+.jugador-card {
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+body.dark-mode .jugador-card {
+    background-color: #2d3748;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.jugador-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.jugador-card h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5em;
+    color: #ff69b4;
+    margin-top: 0;
+    transition: color 0.4s ease;
+}
+
+body.dark-mode .jugador-card h3 {
+    color: #ff4081;
+}
+
+.jugador-card p {
+    color: #6a829e;
+    font-size: 0.9em;
+    margin: 5px 0;
+}
+
+body.dark-mode .jugador-card p {
     color: #a0aec0;
 }
 
-#search-bar:focus, #role-filter:focus {
-    outline: none;
-    border-color: #ff69b4;
-    box-shadow: 0 0 8px rgba(255, 105, 180, 0.3);
-}
-
-/* Botones de control (modo oscuro y música) */
-.dark-mode-toggle, .music-toggle {
-    background-color: #ff69b4;
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: 1.2em;
-    cursor: pointer;
+.jugador-card .roles {
+    margin-top: 15px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 8px;
 }
 
+.jugador-card .role-tag {
+    background-color: #e2e8f0;
+    color: #4a5568;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    text-transform: uppercase;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body.dark-mode .jugador-card .role-tag {
+    background-color: #4a5568;
+    color: #e2e8f0;
+}
+
+/* Estilos para el botón de modo oscuro */
 .dark-mode-toggle {
     position: fixed;
     top: 20px;
     right: 20px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: none;
+    background-color: #ff69b4;
+    color: #fff;
+    font-size: 1.2em;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
     z-index: 1000;
 }
 
-.music-toggle {
-    position: static;
-}
-
-.dark-mode-toggle:hover, .music-toggle:hover {
+.dark-mode-toggle:hover {
     background-color: #ff4081;
     transform: scale(1.1);
 }
 
-body.dark-mode .dark-mode-toggle, body.dark-mode .music-toggle {
-    background-color: #ff4081;
-    color: #1a202c;
+body.dark-mode .dark-mode-toggle {
+    background-color: #2d3748;
+    color: #fff;
 }
 
-body.dark-mode .dark-mode-toggle:hover, body.dark-mode .music-toggle:hover {
-    background-color: #ff69b4;
+body.dark-mode .dark-mode-toggle:hover {
+    background-color: #4a5568;
 }
 
-
-/* Contenedor de la lista de jugadores */
-#lista-jugadores {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-}
-
-/* Estilos para cada tarjeta de jugador */
-.jugador {
-    background-color: #ffffff; /* Tarjetas modo claro: blanco */
-    border: 1px solid #e0e6ed; /* Borde modo claro: gris claro */
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.4s ease, color 0.4s ease;
-    cursor: pointer;
+/* Estilos para el footer */
+.main-footer {
     text-align: center;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeIn 0.6s forwards;
+    padding: 20px;
+    margin-top: 40px;
+    border-top: 1px solid #e2e8f0;
+    color: #6a829e;
+    font-size: 0.9em;
+    transition: border-color 0.4s ease, color 0.4s ease;
 }
 
-body.dark-mode .jugador {
-    background-color: #2d3748; /* Tarjetas modo oscuro: gris azulado */
-    border: 1px solid #4a5568; /* Borde modo oscuro: gris más oscuro */
-    color: #e2e8f0;
+body.dark-mode .main-footer {
+    border-top: 1px solid #2d3748;
+    color: #a0aec0;
 }
 
-.jugador::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: linear-gradient(90deg, #ff69b4, #00bfff); /* Degradado modo claro */
-    transition: transform 0.3s ease-in-out, background-color 0.4s ease;
-    transform: scaleX(0);
-    transform-origin: left;
-}
-
-body.dark-mode .jugador::before {
-    background: linear-gradient(90deg, #ff4081, #40c4ff); /* Degradado modo oscuro */
-}
-
-.jugador:hover::before {
-    transform: scaleX(1);
-}
-
-.jugador:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    border-color: #ff69b4;
-}
-
-body.dark-mode .jugador:hover {
-    border-color: #ff4081;
-}
-
-.jugador h3 {
-    color: #334e68; /* Texto h3 modo claro */
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 1.6em;
-    font-weight: 700;
-    transition: color 0.4s ease;
-}
-
-body.dark-mode .jugador h3 {
-    color: #e2e8f0; /* Texto h3 modo oscuro */
-}
-
-.jugador p {
-    margin: 0;
-    color: #718096; /* Texto p modo claro */
-    font-size: 1em;
-    transition: color 0.4s ease;
-}
-
-body.dark-mode .jugador p {
-    color: #a0aec0; /* Texto p modo oscuro */
-}
-
-.player-avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-/* Estilos para los íconos de línea */
-.role-icon {
-    width: 32px;
-    height: 32px;
-    margin: 0 8px;
-    vertical-align: middle;
-    transition: transform 0.3s ease-in-out;
-    cursor: pointer;
-}
-
-.role-icon:hover {
-    transform: scale(1.2);
-}
-
-/* Animaciones */
-@keyframes fadeIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.03); }
-    100% { transform: scale(1); }
-}
-
-@keyframes fadeInOverlay {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes scaleUp {
-    from { transform: scale(0.7); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-
-/* ------------------------------------------- */
-/* Estilos para el nuevo modal de descripción */
-/* ------------------------------------------- */
-
-/* Contenedor principal del modal (la capa oscura de fondo) */
+/* Estilos del modal */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -325,32 +233,29 @@ body.dark-mode .jugador p {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1001;
-    backdrop-filter: blur(5px);
+    z-index: 2000;
     opacity: 0;
-    animation: fadeInOverlay 0.4s forwards;
-    pointer-events: none; /* Asegura que el clic pase si el modal no es visible */
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .modal-overlay.visible {
     opacity: 1;
-    pointer-events: auto;
+    visibility: visible;
+    animation: fadeInOverlay 0.3s forwards;
 }
 
-/* Contenedor del contenido del modal */
 .modal-content {
-    background-color: #ffffff;
+    background-color: #fff;
     padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    max-width: 90%;
-    max-height: 90%;
-    overflow-y: auto;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 600px;
     position: relative;
     transform: scale(0.7);
     animation: scaleUp 0.4s forwards;
-    color: #334e68;
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 body.dark-mode .modal-content {
@@ -358,287 +263,143 @@ body.dark-mode .modal-content {
     color: #e2e8f0;
 }
 
-/* Botón para cerrar el modal */
-.close-button {
+.modal-content h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2em;
+    color: #ff69b4;
+    margin-top: 0;
+    text-align: center;
+    transition: color 0.4s ease;
+}
+
+body.dark-mode .modal-content h3 {
+    color: #ff4081;
+}
+
+.modal-content .close-button {
     position: absolute;
     top: 15px;
     right: 15px;
     background: none;
     border: none;
     font-size: 2em;
-    color: #a0aec0;
+    color: #aaa;
     cursor: pointer;
-    transition: transform 0.2s ease, color 0.2s ease;
+    transition: color 0.3s ease;
 }
 
-.close-button:hover {
-    transform: rotate(90deg);
-    color: #ff69b4;
-}
-
-body.dark-mode .close-button {
-    color: #718096;
-}
-
-body.dark-mode .close-button:hover {
+.modal-content .close-button:hover {
     color: #ff4081;
 }
 
-/* ESTA ES LA IMAGEN DENTRO DEL MODAL */
-.modal-image-container {
-    width: 150px;
-    height: 150px;
-    margin: 0 auto 20px;
-    border-radius: 50%;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+.modal-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
-.modal-image {
+.modal-details .role-description {
+    background-color: #f0f4f8;
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+    transition: background-color 0.4s ease;
+}
+
+body.dark-mode .modal-details .role-description {
+    background-color: #1a202c;
+}
+
+.modal-details .role-description h4 {
+    font-size: 1.1em;
+    color: #334e68;
+    margin-top: 0;
+    transition: color 0.4s ease;
+}
+
+body.dark-mode .modal-details .role-description h4 {
+    color: #e2e8f0;
+}
+
+.modal-details .role-description p {
+    color: #6a829e;
+    font-size: 0.9em;
+    margin: 0;
+    transition: color 0.4s ease;
+}
+
+body.dark-mode .modal-details .role-description p {
+    color: #a0aec0;
+}
+
+.modal-image-container {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid #ff69b4;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    transition: border-color 0.4s ease;
+}
+
+body.dark-mode .modal-image-container {
+    border-color: #ff4081;
+}
+
+.modal-image-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
 }
 
-.modal-content h3 {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 2em;
-    margin-bottom: 5px;
+/* Animación de brillo para el borde de la imagen */
+.modal-image-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
 
-.modal-content p {
-    font-size: 1.1em;
-    color: #718096;
-    margin-bottom: 20px;
+.modal-overlay.visible .modal-image-container::after {
+    opacity: 1;
 }
 
-body.dark-mode .modal-content p {
-    color: #a0aec0;
+/* Animaciones para el modal */
+@keyframes fadeInOverlay {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-.modal-roles-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
+@keyframes scaleUp {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
 }
 
-.role-button {
-    background-color: #ff69b4;
-    color: #fff;
-    border: none;
-    border-radius: 20px;
-    padding: 8px 15px;
-    font-size: 0.9em;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.role-button:hover {
-    background-color: #ff4081;
-    transform: scale(1.05);
-}
-
-body.dark-mode .role-button {
-    background-color: #ff4081;
-    color: #e2e8f0;
-}
-
-body.dark-mode .role-button:hover {
-    background-color: #ff69b4;
-}
-
-.role-icon-small {
-    width: 20px;
-    height: 20px;
-}
-
-/* Contenedor para la descripción del rol dentro del modal */
-.role-description-container {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #f0f4f8;
-    border-radius: 10px;
-    text-align: left;
-    border: 1px solid #e0e6ed;
-    transition: background-color 0.4s ease, border-color 0.4s ease;
-}
-
-body.dark-mode .role-description-container {
-    background-color: #1f2937;
-    border-color: #4a5568;
-}
-
-.role-description-container h4 {
-    margin-top: 0;
-    font-size: 1.2em;
-    color: #334e68;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-body.dark-mode .role-description-container h4 {
-    color: #e2e8f0;
-}
-
-.role-description-container p {
-    font-size: 1em;
-    margin-bottom: 0;
-    color: #556b82;
-}
-
-body.dark-mode .role-description-container p {
-    color: #a0aec0;
-}
-
-.no-results {
-    text-align: center;
-    color: #718096;
-    font-style: italic;
-    margin-top: 50px;
-}
-
-/* Footer */
-.main-footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-    border-top: 1px solid #e0e6ed;
-    color: #718096;
-    font-size: 0.9em;
-    transition: color 0.4s ease, border-color 0.4s ease;
-}
-
-body.dark-mode .main-footer {
-    border-top: 1px solid #4a5568;
-    color: #a0aec0;
-}
-
-/* Media Queries para diseño adaptable */
-@media (max-width: 768px) {
+/* Media query para el modal en pantallas pequeñas */
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 20px;
+    }
+    .modal-image-container {
+        width: 150px;
+        height: 150px;
+    }
+    .modal-content h3 {
+        font-size: 1.5em;
+    }
+    .modal-content p {
+        font-size: 1em;
+    }
     .controls {
         flex-direction: column;
-        align-items: center;
-    }
-    #search-bar, #role-filter {
-        max-width: 100%;
-    }
-    .dark-mode-toggle {
-        top: 10px;
-        right: 10px;
-        width: 40px;
-        height: 40px;
-        font-size: 1em;
-    }
-    #lista-jugadores {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-    }
-    header {
-        padding: 60px 15px;
-    }
-    header h1 {
-        font-size: 3.5em;
-    }
-    header p {
-        font-size: 1em;
-    }
-    h2 {
-        font-size: 2em;
-    }
-    .jugador {
-        padding: 15px;
-    }
-    .jugador h3 {
-        font-size: 1.2em;
-    }
-    .jugador p {
-        font-size: 0.9em;
-    }
-    .role-icon {
-        width: 28px;
-        height: 28px;
-        margin: 0 5px;
-    }
-    .modal-content {
-        width: 95%;
-        padding: 20px;
-    }
-    /* AJUSTE PARA EL TAMAÑO DE LA IMAGEN EN EL MODAL EN PANTALLAS PEQUEÑAS */
-    .modal-image-container {
-        width: 120px;
-        height: 120px;
-    }
-    .modal-content h3 {
-        font-size: 1.5em;
-    }
-    .modal-content p {
-        font-size: 1em;
-    }
-}
-@media (max-width: 480px) {
-    body {
-        padding: 0;
-    }
-    header {
-        padding: 40px 10px;
-        margin-bottom: 20px;
-        border-radius: 0;
-    }
-    header h1 {
-        font-size: 2.5em;
-        letter-spacing: 2px;
-    }
-    header p {
-        font-size: 0.9em;
-        padding: 0 10px;
-    }
-    main {
-        padding: 10px;
-    }
-    h2 {
-        font-size: 1.8em;
-        margin-top: 20px;
-        margin-bottom: 15px;
-    }
-    #lista-jugadores {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-    .jugador {
-        padding: 15px;
-    }
-    .jugador h3 {
-        font-size: 1.2em;
-    }
-    .jugador p {
-        font-size: 0.9em;
-    }
-    .role-icon {
-        width: 28px;
-        height: 28px;
-        margin: 0 5px;
-    }
-    .modal-content {
-        width: 95%;
-        padding: 20px;
-    }
-    /* AJUSTE PARA EL TAMAÑO DE LA IMAGEN EN EL MODAL EN PANTALLAS MUY PEQUEÑAS */
-    .modal-image-container {
-        width: 100px;
-        height: 100px;
-    }
-    .modal-content h3 {
-        font-size: 1.5em;
-    }
-    .modal-content p {
-        font-size: 1em;
     }
 }
