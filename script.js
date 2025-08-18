@@ -18,10 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
     modalOverlay.classList.add('modal-overlay');
     document.body.appendChild(modalOverlay);
 
-    // Referencias a los botones y audio
+    // Referencia al botón de modo oscuro
     const darkModeToggle = document.getElementById('dark-mode-toggle');
-    const musicToggle = document.getElementById('music-toggle');
-    const backgroundMusic = document.getElementById('background-music');
 
     let currentFilter = {
         searchText: '',
@@ -29,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     let jugadores = []; // Se inicializa vacío, se llenará con los datos del JSON.
-
+    
     // Función para renderizar los jugadores en la interfaz
     function renderizarJugadores(jugadoresFiltrados) {
         listaJugadoresEl.innerHTML = ''; // Limpia el contenedor
@@ -127,22 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         darkModeToggle.querySelector('i').className = isDarkMode ? 'fas fa-sun' : 'fas fa-moon';
     });
 
-    // Escucha el evento de click del botón de música
-    musicToggle.addEventListener('click', () => {
-        const musicIcon = musicToggle.querySelector('i');
-        if (backgroundMusic.paused) {
-            backgroundMusic.play().catch(e => console.error("Error al intentar reproducir el audio:", e));
-            musicIcon.classList.remove('fa-play');
-            musicIcon.classList.add('fa-pause');
-        } else {
-            backgroundMusic.pause();
-            musicIcon.classList.remove('fa-pause');
-            musicIcon.classList.add('fa-play');
-        }
-    });
-
-    // ** Lógica para cargar los datos desde el archivo JSON **
-    // Esta es la parte nueva que hace que todo el proyecto sea funcional y modular.
+    // Lógica para cargar los datos desde el archivo JSON
     fetch('jugadores.json')
         .then(response => {
             if (!response.ok) {
