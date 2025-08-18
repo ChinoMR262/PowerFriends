@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchBar = document.getElementById('search-bar');
     const roleFilter = document.getElementById('role-filter');
     const darkModeToggle = document.getElementById('dark-mode-toggle');
-    const musicToggle = document.getElementById('music-toggle');
-    const backgroundMusic = document.getElementById('background-music');
+    const musicToggle = document.getElementById('music-toggle'); // Agregado para el control de música
+    const backgroundMusic = document.getElementById('background-music'); // Agregado para el audio
 
     // Elementos del modal
     const modalOverlay = document.createElement('div');

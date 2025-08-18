@@ -6,6 +6,7 @@
     <title>PowerFriends</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/color/48/000000/controller.png">
 </head>
 <body>
     <!-- Botón para cambiar el modo oscuro -->
@@ -21,7 +22,7 @@
     <main>
         <!-- Sección de controles de búsqueda y filtro -->
         <div class="controls">
-            <input type="text" id="search-bar" placeholder="Buscar jugador...">
+            <input type="text" id="search-bar" placeholder="Buscar jugador por nombre...">
             <select id="role-filter">
                 <option value="all">Todos los roles</option>
                 <option value="Adc">Adc</option>
@@ -30,15 +31,6 @@
                 <option value="Sup">Sup</option>
                 <option value="Top">Top</option>
             </select>
-            <!-- Botón de control de música -->
-            <button id="music-toggle" class="music-toggle">
-                <i class="fas fa-play"></i>
-            </button>
-            <audio id="background-music" loop>
-                <!-- Comentario: Reemplaza la URL 'path/to/your/music.mp3' con la de tu archivo de música -->
-                <source src="path/to/your/music.mp3" type="audio/mpeg">
-                Tu navegador no soporta el elemento de audio.
-            </audio>
         </div>
 
         <h2>Lista de Jugadores</h2>
