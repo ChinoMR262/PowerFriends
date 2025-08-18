@@ -194,6 +194,7 @@ body.dark-mode .jugador p strong {
     margin: 0 8px;
     vertical-align: middle;
     transition: transform 0.2s ease-in-out;
+    cursor: pointer; /* Añadir cursor de puntero para indicar que se puede hacer clic */
 }
 
 .role-icon:hover {
@@ -331,4 +332,146 @@ body.dark-mode .dark-mode-toggle {
 
 .dark-mode-toggle i {
     display: block;
+}
+
+/* ------------------------------------------- */
+/* Estilos para el nuevo modal de descripción */
+/* ------------------------------------------- */
+
+/* Contenedor principal del modal (la capa oscura de fondo) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001; /* Asegura que esté por encima de todo lo demás */
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    animation: fadeInOverlay 0.3s forwards;
+}
+
+/* Contenedor del contenido del modal */
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.7);
+    animation: scaleUp 0.3s forwards;
+}
+
+body.dark-mode .modal-content {
+    background-color: #1e1e1e;
+}
+
+/* Botón para cerrar el modal */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 2em;
+    cursor: pointer;
+    color: #888;
+    transition: color 0.2s ease-in-out;
+}
+
+.close-button:hover {
+    color: #333;
+}
+
+body.dark-mode .close-button {
+    color: #bbb;
+}
+
+body.dark-mode .close-button:hover {
+    color: #f8f8f8;
+}
+
+/* Estilo para el ícono de rol grande en el modal */
+.modal-icon-large {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+    border-radius: 50%;
+    border: 3px solid #FF69B4;
+    padding: 5px;
+    animation: spin 3s infinite linear;
+    transition: border-color 0.3s ease;
+}
+
+body.dark-mode .modal-icon-large {
+    border: 3px solid #FF4081;
+}
+
+.modal-icon-large:hover {
+    animation-play-state: paused;
+}
+
+/* Estilo para el título y la descripción del rol */
+.modal-content h3 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .modal-content h3 {
+    color: #f8f8f8;
+}
+
+.modal-content p {
+    font-size: 1.1em;
+    color: #555;
+    line-height: 1.8;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .modal-content p {
+    color: #ddd;
+}
+
+/* Animaciones para el modal */
+@keyframes fadeInOverlay {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Media query para el modal en pantallas pequeñas */
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 20px;
+    }
+    .modal-icon-large {
+        width: 60px;
+        height: 60px;
+    }
+    .modal-content h3 {
+        font-size: 1.5em;
+    }
+    .modal-content p {
+        font-size: 1em;
+    }
 }
