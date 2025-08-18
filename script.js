@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const darkModeToggle = document.getElementById('dark-mode-toggle');
     const musicToggle = document.getElementById('music-toggle');
     const backgroundMusic = document.getElementById('background-music');
-    
+
     // Elementos del modal
     const modalOverlay = document.createElement('div');
     modalOverlay.classList.add('modal-overlay');
@@ -24,41 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Almacenamiento de datos para los jugadores
     let todosLosJugadores = [];
-    
-    // Mapeo de roles a iconos de Font Awesome y descripciones
-    const roleIcons = {
-        'Adc': 'fa-crosshairs',
-        'Jungla': 'fa-leaf',
-        'Medio': 'fa-bolt',
-        'Sup': 'fa-shield-alt',
-        'Top': 'fa-mountain'
-    };
 
-    const descripcionesRoles = {
-        'Adc': {
-            descripcion: 'El **Attack Damage Carry** (ADC) es el tirador del equipo. Se enfoca en infligir una gran cantidad de daño físico a distancia en las peleas de equipo. Su éxito depende de un buen posicionamiento y la protección de su equipo.',
-            datoCurioso: 'Los jugadores de ADC suelen tener el mayor daño total en las partidas, pero también son muy vulnerables a los ataques enemigos.'
-        },
-        'Jungla': {
-            descripcion: 'El **Jungla** es el jugador que se encarga de cazar monstruos neutrales en la jungla. Su principal función es ayudar a las líneas con gankeos, asegurar objetivos y controlar el mapa.',
-            datoCurioso: 'Un buen jungla es el cerebro del juego temprano, planificando las rutas de gankeo y prediciendo los movimientos del jungla rival.'
-        },
-        'Medio': {
-            descripcion: 'El jugador del **carril central** (Mid) es la fuente principal de daño mágico o físico del equipo. Tiene una gran movilidad y puede influir en todas las líneas del mapa, ayudando a su jungla y a sus compañeros.',
-            datoCurioso: 'Los jugadores de la línea media a menudo se consideran los carrys más importantes, ya que tienen la versatilidad de jugar con magos, asesinos y campeones de utilidad.'
-        },
-        'Sup': {
-            descripcion: 'El **Soporte** (Sup) protege a su ADC en la fase de líneas y al resto del equipo en las peleas. Es crucial para el control de visión del mapa y para iniciar o contrarrestar los ataques enemigos.',
-            datoCurioso: 'El rol de soporte no se trata solo de curar o proteger, también implica una gran toma de decisiones sobre cuándo y dónde iniciar peleas.'
-        },
-        'Top': {
-            descripcion: 'El jugador del **carril superior** (Top) es un especialista en duelos uno contra uno. Generalmente juega con tanques o luchadores, y su objetivo es dominar su línea para poder unirse a su equipo y ganar las peleas de equipo.',
-            datoCurioso: 'La línea superior es a menudo la más aislada del mapa, por lo que los jugadores de Top necesitan una gran habilidad individual y conciencia del mapa.'
-        }
-    };
-    
     // --- Funciones de la aplicación ---
-    
+
     /**
      * Carga los datos de los jugadores desde el archivo JSON.
      */
@@ -82,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function renderizarJugadores(jugadores) {
         listaJugadoresDiv.innerHTML = '';
-        
+
         if (jugadores.length === 0) {
             listaJugadoresDiv.innerHTML = '<p class="no-results">No se encontraron jugadores que coincidan con los criterios de búsqueda.</p>';
             return;
@@ -94,24 +62,24 @@ document.addEventListener('DOMContentLoaded', () => {
             jugadorCard.style.animationDelay = `${0.05 * index}s`;
 
             const iconHtml = jugador.lineas.map(linea => {
-                const iconClass = roleIcons[linea] || 'fa-question';
-                return `<i class="fas ${iconClass} role-icon-small"></i>`;
+                const roleName = linea.charAt(0).toUpperCase() + linea.slice(1).toLowerCase();
+                return `<img src="Icon/${roleName}.png" alt="${linea}" class="role-icon" data-role="${linea}">`;
             }).join(' ');
 
             jugadorCard.innerHTML = `
-                <img src="https://placehold.co/150x150/FF69B4/FFFFFF?text=${jugador.nombre.charAt(0)}" alt="Avatar de ${jugador.nombre}" class="role-icon">
+                <img src="https://placehold.co/150x150/FF69B4/FFFFFF?text=${jugador.nombre.charAt(0)}" alt="Avatar de ${jugador.nombre}" class="player-avatar">
                 <h3>${jugador.nombre}</h3>
                 <p><strong>Roles:</strong> ${iconHtml}</p>
             `;
-            
+
             jugadorCard.addEventListener('click', () => {
                 mostrarModal(jugador);
             });
-            
+
             listaJugadoresDiv.appendChild(jugadorCard);
         });
     }
-    
+
     /**
      * Filtra y busca en la lista de jugadores basándose en la entrada del usuario.
      */
@@ -127,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         renderizarJugadores(jugadoresFiltrados);
     }
-    
+
     /**
      * Muestra el modal con la información detallada del jugador.
      * @param {Object} jugador - El objeto jugador a mostrar en el modal.
@@ -135,40 +103,43 @@ document.addEventListener('DOMContentLoaded', () => {
     function mostrarModal(jugador) {
         modalDetails.innerHTML = ''; // Limpia el contenido anterior
 
-        const roleButtonsHtml = jugador.lineas.map(linea => {
-            const iconClass = roleIcons[linea] || 'fa-question';
-            const roleInfo = descripcionesRoles[linea] || { descripcion: 'No hay descripción disponible.', datoCurioso: '' };
-
-            const button = document.createElement('button');
-            button.classList.add('role-button');
-            button.innerHTML = `<i class="fas ${iconClass}"></i> ${linea}`;
-            
-            // Añade un evento de clic al botón del rol para mostrar su descripción
-            button.addEventListener('click', () => {
-                const modalInfo = document.createElement('div');
-                modalInfo.classList.add('modal-role-info');
-                modalInfo.innerHTML = `
-                    <h4>${linea}</h4>
-                    <p><strong>Descripción:</strong> ${roleInfo.descripcion}</p>
-                    <p><strong>Dato curioso:</strong> ${roleInfo.datoCurioso}</p>
-                `;
-                modalDetails.appendChild(modalInfo);
-            });
-            
-            return button.outerHTML;
-        }).join('');
-        
-        modalDetails.innerHTML = `
+        // Contenido estático del modal
+        const modalContentHtml = `
             <div class="modal-image-container">
                 <img src="https://placehold.co/200x200/FF69B4/FFFFFF?text=${jugador.nombre.charAt(0)}" alt="Avatar de ${jugador.nombre}" class="modal-image">
             </div>
             <h3>${jugador.nombre}</h3>
             <p>Conocido por sus roles en:</p>
             <div class="modal-roles-container">
-                ${roleButtonsHtml}
+                ${jugador.lineas.map(linea => {
+                    const roleName = linea.charAt(0).toUpperCase() + linea.slice(1).toLowerCase();
+                    return `<button class="role-button" data-role="${linea}">
+                                <img src="Icon/${roleName}.png" alt="${linea}" class="role-icon-small">
+                                ${linea}
+                            </button>`;
+                }).join('')}
             </div>
         `;
-        
+
+        modalDetails.innerHTML = modalContentHtml;
+
+        // Añadir el contenedor de descripción de rol
+        const roleDescriptionContainer = document.createElement('div');
+        roleDescriptionContainer.classList.add('role-description-container');
+        modalDetails.appendChild(roleDescriptionContainer);
+
+        // Añadir eventos de clic a los botones de rol dentro del modal
+        modalDetails.querySelectorAll('.role-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const selectedRole = button.dataset.role;
+                const description = jugador.descripciones[selectedRole] || 'No hay descripción disponible para este rol.';
+                roleDescriptionContainer.innerHTML = `
+                    <h4>Descripción de ${selectedRole}:</h4>
+                    <p>${description}</p>
+                `;
+            });
+        });
+
         modalOverlay.classList.add('visible');
     }
 
@@ -231,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cerrarModal();
         }
     });
-    
+
     // Inicia la carga de los datos de los jugadores al iniciar la página
     cargarJugadores();
 });

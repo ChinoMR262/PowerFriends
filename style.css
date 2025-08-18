@@ -4,45 +4,571 @@
 /* Estilos generales para el cuerpo de la página */
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #f5f5f5; /* Fondo modo claro */
-    color: #333; /* Texto modo claro */
+    background-color: #f0f4f8; /* Fondo modo claro: azul claro suave */
+    color: #334e68; /* Texto modo claro: azul oscuro grisáceo */
     margin: 0;
     padding: 0;
     line-height: 1.6;
     min-height: 100vh;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 /* Clases para el modo oscuro */
 body.dark-mode {
-    background-color: #121212; /* Fondo modo oscuro */
-    color: #f8f8f8; /* Texto modo oscuro */
+    background-color: #1a202c; /* Fondo modo oscuro: azul casi negro */
+    color: #e2e8f0; /* Texto modo oscuro: gris claro */
 }
 
 /* Estilos para el encabezado principal */
 header {
     text-align: center;
     padding: 80px 20px;
-    background-color: #FF69B4; /* Acento modo claro */
+    background-color: #ff69b4; /* Acento modo claro: rosa intenso */
     color: #fff;
     margin-bottom: 40px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Nuevo estilo para el título H1 dentro del encabezado */
-header h1 {
-    color: #007bff; /* Color azul llamativo para el título */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Sombra para que se destaque más */
+    transition: background-color 0.4s ease, color 0.4s ease;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 body.dark-mode header {
-    background-color: #FF4081; /* Acento modo oscuro */
+    background-color: #ff4081; /* Acento modo oscuro: rosa más oscuro */
+    color: #f8f8f8;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-/* Estilos para los botones de control (modo oscuro, música) */
-.dark-mode-toggle,
+header h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 4.5em; /* Título más grande */
+    margin: 0;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
+    animation: pulse 2s infinite alternate;
+}
+
+header h1:hover {
+    transform: scale(1.05);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+header p {
+    font-size: 1.2em;
+    margin-top: 15px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #ffeef8; /* Un tono más claro para el texto del header en modo claro */
+    transition: color 0.4s ease;
+}
+
+body.dark-mode header p {
+    color: #fde2ec; /* Un tono más claro para el texto del header en modo oscuro */
+}
+
+/* Contenedor principal de la página */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Estilos para los títulos secundarios */
+h2 {
+    color: #334e68; /* Texto h2 modo claro */
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 2.5em;
+    transition: color 0.4s ease;
+}
+
+body.dark-mode h2 {
+    color: #e2e8f0; /* Texto h2 modo oscuro */
+}
+
+/* Contenedor de la lista de jugadores */
+#lista-jugadores {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+/* Estilos para cada tarjeta de jugador */
+.jugador {
+    background-color: #ffffff; /* Tarjetas modo claro: blanco */
+    border: 1px solid #e0e6ed; /* Borde modo claro: gris claro */
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.4s ease, color 0.4s ease;
+    cursor: pointer;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+body.dark-mode .jugador {
+    background-color: #2d3748; /* Tarjetas modo oscuro: gris azulado */
+    border: 1px solid #4a5568; /* Borde modo oscuro: gris más oscuro */
+    color: #e2e8f0;
+}
+
+.jugador::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #ff69b4, #00bfff); /* Degradado modo claro */
+    transition: transform 0.3s ease-in-out, background-color 0.4s ease;
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+body.dark-mode .jugador::before {
+    background: linear-gradient(90deg, #ff4081, #40c4ff); /* Degradado modo oscuro */
+}
+
+.jugador:hover::before {
+    transform: scaleX(1);
+}
+
+.jugador:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-color: #ff69b4;
+}
+
+body.dark-mode .jugador:hover {
+    border-color: #ff4081;
+}
+
+.jugador h3 {
+    color: #334e68; /* Texto h3 modo claro */
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.6em;
+    font-weight: 700;
+    transition: color 0.4s ease;
+}
+
+body.dark-mode .jugador h3 {
+    color: #e2e8f0; /* Texto h3 modo oscuro */
+}
+
+.jugador p {
+    margin: 0;
+    color: #718096; /* Texto p modo claro */
+    font-size: 1em;
+    transition: color 0.4s ease;
+}
+
+body.dark-mode .jugador p {
+    color: #a0aec0; /* Texto p modo oscuro */
+}
+
+.jugador p strong {
+    color: #334e68; /* Texto strong modo claro */
+    font-weight: 700;
+    display: block;
+    margin-bottom: 5px;
+    transition: color 0.4s ease;
+}
+
+body.dark-mode .jugador p strong {
+    color: #e2e8f0; /* Texto strong modo oscuro */
+}
+
+/* Estilos para los íconos de línea */
+.role-icon {
+    width: 32px;
+    height: 32px;
+    margin: 0 8px;
+    vertical-align: middle;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.role-icon:hover {
+    transform: scale(1.2);
+}
+
+/* Animación de aparición para las tarjetas */
+.jugador {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.6s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Media Queries para diseño adaptable */
+@media (max-width: 768px) {
+    #lista-jugadores {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    header {
+        padding: 60px 15px;
+    }
+
+    header h1 {
+        font-size: 3.5em; /* Tamaño más adecuado para tablets */
+    }
+
+    header p {
+        font-size: 1em;
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Diseño específico para móviles pequeños */
+    body {
+        padding: 0;
+    }
+
+    header {
+        padding: 40px 10px;
+        margin-bottom: 20px;
+    }
+
+    header h1 {
+        font-size: 2.5em;
+        letter-spacing: 2px;
+    }
+
+    header p {
+        font-size: 0.9em;
+        padding: 0 10px;
+    }
+
+    main {
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 1.8em;
+        margin-top: 20px;
+        margin-bottom: 15px;
+    }
+
+    #lista-jugadores {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .jugador {
+        padding: 15px;
+    }
+
+    .jugador h3 {
+        font-size: 1.2em;
+    }
+
+    .jugador p {
+        font-size: 0.9em;
+    }
+
+    .role-icon {
+        width: 28px;
+        height: 28px;
+        margin: 0 5px;
+    }
+
+    /* Regla del modal actualizada para móviles */
+    .modal-content {
+        width: 90%;
+        max-width: 350px;
+        padding: 20px;
+        margin: 10px;
+    }
+}
+
+.jugador:nth-child(1) { animation-delay: 0.05s; }
+.jugador:nth-child(2) { animation-delay: 0.1s; }
+.jugador:nth-child(3) { animation-delay: 0.15s; }
+.jugador:nth-child(4) { animation-delay: 0.2s; }
+.jugador:nth-child(5) { animation-delay: 0.25s; }
+.jugador:nth-child(6) { animation-delay: 0.3s; }
+.jugador:nth-child(7) { animation-delay: 0.35s; }
+.jugador:nth-child(8) { animation-delay: 0.4s; }
+.jugador:nth-child(9) { animation-delay: 0.45s; }
+
+/* Animación de pulso para el título */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
+/* Estilo adicional para el botón de modo oscuro (se agregó al HTML) */
+.dark-mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #334e68;
+    cursor: pointer;
+    font-size: 1.5em;
+    outline: none;
+    transition: color 0.4s ease;
+    z-index: 1000;
+}
+
+body.dark-mode .dark-mode-toggle {
+    color: #e2e8f0;
+}
+
+.dark-mode-toggle i {
+    display: block;
+}
+
+/* ------------------------------------------- */
+/* Estilos para el nuevo modal de descripción */
+/* ------------------------------------------- */
+
+/* Contenedor principal del modal (la capa oscura de fondo) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    animation: fadeInOverlay 0.4s forwards;
+    pointer-events: none; /* Asegura que el clic pase si el modal no es visible */
+}
+
+.modal-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Contenedor del contenido del modal */
+.modal-content {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.7);
+    animation: scaleUp 0.4s forwards;
+    color: #334e68;
+}
+
+body.dark-mode .modal-content {
+    background-color: #2d3748;
+    color: #e2e8f0;
+}
+
+/* Botón para cerrar el modal */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 2em;
+    cursor: pointer;
+    color: #888;
+    transition: color 0.3s ease-in-out;
+}
+
+.close-button:hover {
+    color: #333;
+}
+
+body.dark-mode .close-button {
+    color: #a0aec0;
+}
+
+body.dark-mode .close-button:hover {
+    color: #f8f8f8;
+}
+
+.modal-image-container {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 20px;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ff69b4;
+    position: relative;
+    border: 5px solid #fff;
+}
+
+body.dark-mode .modal-image-container {
+    background-color: #ff4081;
+    border: 5px solid #2d3748;
+}
+
+.modal-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+/* Estilo para el título y la descripción del rol */
+.modal-content h3 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    font-family: 'Montserrat', sans-serif;
+    color: inherit;
+}
+
+.modal-content p {
+    font-size: 1.1em;
+    color: inherit;
+    line-height: 1.8;
+    text-align: left;
+}
+
+.modal-roles-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.role-button {
+    background-color: #f0f4f8;
+    border: 2px solid #e0e6ed;
+    color: #334e68;
+    padding: 10px 15px;
+    border-radius: 25px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.role-button:hover {
+    background-color: #ff69b4;
+    color: #fff;
+    border-color: #ff69b4;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .role-button {
+    background-color: #2d3748;
+    border-color: #4a5568;
+    color: #e2e8f0;
+}
+
+body.dark-mode .role-button:hover {
+    background-color: #ff4081;
+    border-color: #ff4081;
+    color: #1a202c;
+}
+
+.role-icon-small {
+    width: 24px;
+    height: 24px;
+}
+
+.role-description-container {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    text-align: left;
+    border: 1px solid #e0e6ed;
+}
+
+body.dark-mode .role-description-container {
+    background-color: #242933;
+    border-color: #4a5568;
+}
+
+.role-description-container h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #334e68;
+}
+
+body.dark-mode .role-description-container h4 {
+    color: #e2e8f0;
+}
+
+/* Estilos para los nuevos controles */
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.controls #search-bar, .controls #role-filter {
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 25px;
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.4s ease, background-color 0.4s ease, color 0.4s ease;
+}
+
+.controls #search-bar:focus, .controls #role-filter:focus {
+    border-color: #ff69b4;
+    box-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
+}
+
+body.dark-mode .controls #search-bar, body.dark-mode .controls #role-filter {
+    background-color: #2d3748;
+    color: #e2e8f0;
+    border-color: #4a5568;
+}
+
+body.dark-mode .controls #search-bar:focus, body.dark-mode .controls #role-filter:focus {
+    border-color: #ff4081;
+}
+
 .music-toggle {
-    background-color: #FF69B4;
+    background-color: #ff69b4;
     color: white;
     border: none;
     border-radius: 50%;
@@ -53,289 +579,24 @@ body.dark-mode header {
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
-    position: fixed;
-    top: 20px;
-    z-index: 1000;
+    transition: background-color 0.4s ease, transform 0.3s ease-in-out;
 }
 
-.dark-mode-toggle {
-    right: 20px;
-}
-
-.music-toggle {
-    right: 80px;
-}
-
-.dark-mode-toggle:hover,
 .music-toggle:hover {
+    background-color: #ff4081;
     transform: scale(1.1);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
-body.dark-mode .dark-mode-toggle,
 body.dark-mode .music-toggle {
-    background-color: #FF4081;
+    background-color: #ff4081;
+    color: #1a202c;
 }
 
-body.dark-mode .dark-mode-toggle:hover,
 body.dark-mode .music-toggle:hover {
-    background-color: #FF69B4;
+    background-color: #ff69b4;
 }
 
-
-/* Estilos para la sección principal (main) */
-main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-/* Controles de búsqueda y filtro */
-.controls {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 40px;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-body.dark-mode .controls {
-    background-color: rgba(30, 30, 30, 0.8);
-    border: 1px solid rgba(50, 50, 50, 0.3);
-}
-
-.controls input,
-.controls select {
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    color: #333;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-body.dark-mode .controls input,
-body.dark-mode .controls select {
-    background-color: #2c2c2c;
-    border-color: #444;
-    color: #f8f8f8;
-}
-
-.controls input:focus,
-.controls select:focus {
-    border-color: #FF69B4;
-    outline: none;
-    box-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
-}
-
-/* Estilos de la lista de jugadores */
-#lista-jugadores {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
-}
-
-.jugador {
-    background-color: #fff;
-    padding: 25px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-    cursor: pointer;
-    opacity: 0;
-    animation: fadeIn 0.5s ease-in-out forwards;
-}
-
-body.dark-mode .jugador {
-    background-color: #1e1e1e;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-.jugador:hover {
-    transform: translateY(-10px) scale(1.03);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-/* Estilos para los íconos de roles dentro de la tarjeta */
-.jugador p {
-    font-size: 0.9em;
-    color: #666;
-    margin-top: 10px;
-}
-
-body.dark-mode .jugador p {
-    color: #aaa;
-}
-
-.role-icon-small {
-    margin: 0 5px;
-    color: #FF69B4;
-    font-size: 1.2em;
-}
-
-body.dark-mode .role-icon-small {
-    color: #FF4081;
-}
-
-/* Estilos para el modal */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-.modal-overlay.visible {
-    opacity: 1;
-    visibility: visible;
-}
-
-.modal-content {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 15px;
-    text-align: center;
-    position: relative;
-    max-width: 500px;
-    width: 90%;
-    transform: scale(0.8);
-    transition: transform 0.3s ease;
-}
-
-.modal-overlay.visible .modal-content {
-    transform: scale(1);
-}
-
-body.dark-mode .modal-content {
-    background-color: #2c2c2c;
-}
-
-.modal-image-container {
-    background-color: #FF69B4;
-    border-radius: 50%;
-    width: 150px;
-    height: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    border: 5px solid #fff;
-}
-
-body.dark-mode .modal-image-container {
-    background-color: #FF4081;
-    border: 5px solid #1e1e1e;
-}
-
-.modal-image {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.modal-content h3 {
-    margin-bottom: 10px;
-    color: #333;
-}
-
-body.dark-mode .modal-content h3 {
-    color: #f8f8f8;
-}
-
-.modal-content p {
-    color: #666;
-    margin-bottom: 20px;
-}
-
-body.dark-mode .modal-content p {
-    color: #aaa;
-}
-
-.modal-roles-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.role-button {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    padding: 8px 15px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-weight: bold;
-    color: #333;
-}
-
-body.dark-mode .role-button {
-    background-color: #444;
-    border: 1px solid #666;
-    color: #f8f8f8;
-}
-
-.role-button:hover {
-    background-color: #e0e0e0;
-    transform: translateY(-2px);
-}
-
-body.dark-mode .role-button:hover {
-    background-color: #555;
-}
-
-.close-button {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 2em;
-    font-weight: bold;
-    color: #888;
-    cursor: pointer;
-    background: none;
-    border: none;
-    transition: color 0.2s ease;
-}
-
-.close-button:hover {
-    color: #555;
-}
-
-/* Animaciones */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
+/* Animaciones para el modal */
 @keyframes fadeInOverlay {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -344,4 +605,50 @@ body.dark-mode .role-button:hover {
 @keyframes scaleUp {
     from { transform: scale(0.7); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes shine {
+    from { transform: translateX(0%); }
+    to { transform: translateX(200%); }
+}
+
+/* Media query para el modal en pantallas pequeñas */
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 20px;
+    }
+    .modal-image-container {
+        width: 150px;
+        height: 150px;
+    }
+    .modal-content h3 {
+        font-size: 1.5em;
+    }
+    .modal-content p {
+        font-size: 1em;
+    }
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .controls #search-bar, .controls #role-filter, .music-toggle {
+        width: 100%;
+        margin: 5px 0;
+    }
+}
+
+.main-footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    background-color: #e0e8f0;
+    color: #718096;
+    border-top: 1px solid #c8d2d9;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body.dark-mode .main-footer {
+    background-color: #2d3748;
+    color: #a0aec0;
+    border-top: 1px solid #4a5568;
 }
