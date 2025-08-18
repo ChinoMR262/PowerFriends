@@ -32,15 +32,28 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     async function cargarJugadores() {
         try {
+            console.log('Intentando cargar jugadores.json...');
             const response = await fetch('jugadores.json');
+            
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error(`Error HTTP: ${response.status}`);
             }
-            todosLosJugadores = await response.json();
+            
+            const data = await response.json();
+            todosLosJugadores = data;
+            
+            if (todosLosJugadores.length === 0) {
+                console.warn('El archivo jugadores.json se cargó correctamente, pero está vacío.');
+                listaJugadoresDiv.innerHTML = '<p class="no-results-message">El archivo de jugadores está vacío.</p>';
+                return;
+            }
+            
+            console.log(`¡Jugadores cargados con éxito! Se encontraron ${todosLosJugadores.length} jugadores.`);
             mostrarJugadores(todosLosJugadores);
+            
         } catch (error) {
             console.error('No se pudo cargar el archivo jugadores.json:', error);
-            listaJugadoresDiv.innerHTML = '<p class="error-message">Hubo un problema al cargar los datos de los jugadores. Por favor, inténtalo de nuevo más tarde.</p>';
+            listaJugadoresDiv.innerHTML = '<p class="error-message">Hubo un problema al cargar los datos de los jugadores. Por favor, asegúrate de que el archivo jugadores.json existe y es accesible.</p>';
         }
     }
     
@@ -109,10 +122,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const imageContainer = document.createElement('div');
         imageContainer.classList.add('modal-image-container');
         
-        // ** CORRECCIÓN: Usar la ruta de imagen proporcionada por el usuario **
+        // Usar la ruta de imagen proporcionada por el usuario
         const roleImage = document.createElement('img');
         roleImage.src = `Icon/${selectedRole}.png`;
         roleImage.alt = `Imagen del rol ${selectedRole}`;
+        // En caso de que la imagen no se encuentre
+        roleImage.onerror = () => {
+            console.error(`Error al cargar la imagen: Icon/${selectedRole}.png`);
+            roleImage.src = `https://placehold.co/200x200/ff69b4/fff?text=${selectedRole.toUpperCase()}`;
+        };
 
         imageContainer.appendChild(roleImage);
         
