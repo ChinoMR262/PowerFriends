@@ -188,24 +188,16 @@ body.dark-mode .jugador p strong {
 }
 
 /* Estilos para los íconos de línea */
-.jugador p i {
-    font-size: 1.6em;
+.role-icon {
+    width: 32px;
+    height: 32px;
     margin: 0 8px;
-    color: #00BFFF; /* Iconos modo claro */
-    transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+    vertical-align: middle;
+    transition: transform 0.2s ease-in-out;
 }
 
-body.dark-mode .jugador p i {
-    color: #40C4FF; /* Iconos modo oscuro */
-}
-
-.jugador p i:hover {
+.role-icon:hover {
     transform: scale(1.2);
-    color: #FF69B4;
-}
-
-body.dark-mode .jugador p i:hover {
-    color: #FF4081;
 }
 
 /* Animación de aparición para las tarjetas */
@@ -294,8 +286,9 @@ body.dark-mode .jugador p i:hover {
         font-size: 0.9em;
     }
 
-    .jugador p i {
-        font-size: 1.4em;
+    .role-icon {
+        width: 28px;
+        height: 28px;
         margin: 0 5px;
     }
 }

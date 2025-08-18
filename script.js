@@ -31,28 +31,10 @@ loadDarkModePreference();
 // Añade un 'event listener' al botón para cambiar el modo oscuro al hacer clic
 darkModeToggle.addEventListener('click', toggleDarkMode);
 
-
-// Función para obtener el ícono del rol
+// Función para obtener el ícono del rol usando imágenes PNG
 function obtenerIconoRol(rol) {
-    switch (rol.toLowerCase()) {
-        case 'jungla':
-            return '<i class="ri-knife-line" title="Jungla"></i>'; // Daga
-        case 'tirador':
-        case 'adc':
-        case 'bot':
-            return '<i class="ri-pistol-line" title="Tirador"></i>'; // Pistola
-        case 'mago':
-        case 'mid':
-        case 'medio':
-            return '<i class="ri-sparkle-fill" title="Mago"></i>'; // Magia
-        case 'sup':
-            return '<i class="ri-plant-fill" title="Soporte"></i>'; // Planta
-        case 'tanque':
-        case 'top':
-            return '<i class="ri-shield-line" title="Tanque"></i>'; // Escudo
-        default:
-            return '';
-    }
+    const roleName = rol.charAt(0).toUpperCase() + rol.slice(1).toLowerCase(); // Asegura el formato de nombre del archivo, por ejemplo, "Adc" o "Top"
+    return `<img src="Icon/${roleName}.png" alt="${rol}" class="role-icon">`;
 }
 
 // Usamos la función 'fetch' para cargar el archivo JSON
