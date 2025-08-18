@@ -241,12 +241,12 @@ body.dark-mode .jugador h3 {
     transition: transform 0.3s ease;
 }
 
-.modal-overlay.visible .modal-content {
-    transform: scale(1);
-}
-
 body.dark-mode .modal-content {
     background-color: #222;
+}
+
+.modal-overlay.visible .modal-content {
+    transform: scale(1);
 }
 
 .close-button {
