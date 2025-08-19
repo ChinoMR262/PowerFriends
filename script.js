@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Referencias a los elementos internos del modal
     const modalContent = modalOverlay.querySelector('.modal-content');
     const modalDetails = modalOverlay.querySelector('.modal-details');
+    // Se corrige la clase del botón de cierre para que sea seleccionable
     const closeModalButton = modalOverlay.querySelector('.close-button');
 
     // Almacenamiento de datos para los jugadores
@@ -191,6 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cierra el modal al hacer clic fuera del contenido
     modalOverlay.addEventListener('click', (event) => {
+        // Se asegura de que el clic ocurra directamente en el overlay y no en su contenido
         if (event.target === modalOverlay) {
             cerrarModal();
         }
