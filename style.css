@@ -595,8 +595,6 @@ body.dark-mode .main-footer {
     border-top: 1px solid #4a5568;
 }
 
-/* Eliminado el estilo .music-toggle ya que no se usa */
-
 /* Animaciones para el modal */
 @keyframes fadeInOverlay {
     from { opacity: 0; }
