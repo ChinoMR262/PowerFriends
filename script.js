@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Referencias a los elementos internos del modal
     const modalContent = modalOverlay.querySelector('.modal-content');
     const modalDetails = modalOverlay.querySelector('.modal-details');
-    // Se corrige la clase del botón de cierre para que sea seleccionable
     const closeModalButton = modalOverlay.querySelector('.close-button');
 
     // Almacenamiento de datos para los jugadores
@@ -60,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const jugadorCard = document.createElement('div');
             jugadorCard.classList.add('jugador');
 
-            // Modificado: Ahora usamos etiquetas <img> con la ruta del archivo
             const rolesHtml = jugador.lineas.map(rol => {
                 const iconoRuta = obtenerRutaIcono(rol);
                 return `<img src="${iconoRuta}" alt="Ícono de ${rol}" class="role-icon" title="${rol}">`;
@@ -105,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p>${jugador.descripciones[primerRol]}</p>
             </div>
         `;
+        // Se añade la clase 'visible' para mostrar el modal
         modalOverlay.classList.add('visible');
     }
     
@@ -112,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * Cierra el modal de descripción.
      */
     function cerrarModal() {
+        // Se elimina la clase 'visible' para ocultar el modal
         modalOverlay.classList.remove('visible');
     }
 
@@ -192,7 +192,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cierra el modal al hacer clic fuera del contenido
     modalOverlay.addEventListener('click', (event) => {
-        // Se asegura de que el clic ocurra directamente en el overlay y no en su contenido
         if (event.target === modalOverlay) {
             cerrarModal();
         }

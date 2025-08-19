@@ -357,19 +357,16 @@ body.dark-mode .dark-mode-toggle {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
+    display: none; /* CORRECCIÓN: el modal se oculta por defecto */
     justify-content: center;
     align-items: center;
     z-index: 1001;
     backdrop-filter: blur(5px);
-    opacity: 0;
-    animation: fadeInOverlay 0.4s forwards;
-    pointer-events: none; /* Asegura que el clic pase si el modal no es visible */
 }
 
 .modal-overlay.visible {
-    opacity: 1;
-    pointer-events: auto;
+    display: flex; /* CORRECCIÓN: el modal se muestra con esta clase */
+    animation: fadeInOverlay 0.4s forwards;
 }
 
 /* Contenedor del contenido del modal */
