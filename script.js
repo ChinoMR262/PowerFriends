@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(modalOverlay);
 
     // Referencias a los elementos internos del modal
+    const modalContent = modalOverlay.querySelector('.modal-content');
     const modalDetails = modalOverlay.querySelector('.modal-details');
     const closeModalButton = modalOverlay.querySelector('.close-button');
 
@@ -58,9 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const jugadorCard = document.createElement('div');
             jugadorCard.classList.add('jugador');
 
+            // Modificado: Ahora usamos etiquetas <img> con la ruta del archivo
             const rolesHtml = jugador.lineas.map(rol => {
-                const icono = obtenerRutaIcono(rol);
-                return `<img src="${icono}" alt="Ícono de ${rol}" class="role-icon" title="${rol}">`;
+                const iconoRuta = obtenerRutaIcono(rol);
+                return `<img src="${iconoRuta}" alt="Ícono de ${rol}" class="role-icon" title="${rol}">`;
             }).join('');
 
             jugadorCard.innerHTML = `
@@ -84,6 +86,8 @@ document.addEventListener('DOMContentLoaded', () => {
      * @param {Object} jugador - El objeto del jugador a mostrar en el modal.
      */
     function abrirModal(jugador) {
+        const primerRol = jugador.lineas[0];
+        const iconoRuta = obtenerRutaIcono(primerRol);
         modalDetails.innerHTML = `
             <h3>${jugador.nombre}</h3>
             <div class="modal-roles-container">
@@ -94,10 +98,10 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="role-description-container" id="desc-container">
                 <div class="role-content">
-                    <img src="${obtenerRutaIcono(jugador.lineas[0])}" alt="Ícono del rol" class="role-description-icon">
-                    <h4>${jugador.lineas[0]}</h4>
+                    <img src="${iconoRuta}" alt="Ícono de ${primerRol}" class="role-description-icon">
+                    <h4>${primerRol}</h4>
                 </div>
-                <p>${jugador.descripciones[jugador.lineas[0]]}</p>
+                <p>${jugador.descripciones[primerRol]}</p>
             </div>
         `;
         modalOverlay.classList.add('visible');
@@ -111,18 +115,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Retorna la ruta del ícono para un rol dado.
+     * Retorna la ruta de la imagen para un rol dado.
      * @param {string} rol - El nombre del rol.
-     * @returns {string} - La ruta al archivo del ícono.
+     * @returns {string} - La ruta del archivo de imagen.
      */
     function obtenerRutaIcono(rol) {
         const iconos = {
-            "Adc": "https://raw.githubusercontent.com/JuanCarlos-P/league-of-legends-icons/main/icons/Adc_icon.png",
-            "Jungla": "https://raw.githubusercontent.com/JuanCarlos-P/league-of-legends-icons/main/icons/Jungla_icon.png",
-            "Medio": "https://raw.githubusercontent.com/JuanCarlos-P/league-of-legends-icons/main/icons/Medio_icon.png",
-            "Sup": "https://raw.githubusercontent.com/JuanCarlos-P/league-of-legends-icons/main/icons/Sup_icon.png",
-            "Top": "https://raw.githubusercontent.com/JuanCarlos-P/league-of-legends-icons/main/icons/Top_icon.png"
+            "Adc": "Icon/Adc.png",
+            "Jungla": "Icon/Jungla.png",
+            "Medio": "Icon/Medio.png",
+            "Sup": "Icon/Sup.png",
+            "Top": "Icon/Top.png"
         };
+        // Retorna la ruta o una cadena vacía si no se encuentra
         return iconos[rol] || '';
     }
 
@@ -191,6 +196,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Detiene la propagación de clics dentro del modal para evitar que se cierre
+    modalContent.addEventListener('click', (event) => {
+        event.stopPropagation();
+    });
+
     // Cierra el modal al presionar la tecla 'Esc'
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape' && modalOverlay.classList.contains('visible')) {
@@ -200,17 +210,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Delegación de eventos para los botones de rol dentro del modal
     modalOverlay.addEventListener('click', (event) => {
-        if (event.target.closest('.role-button')) {
-            const roleButton = event.target.closest('.role-button');
+        const roleButton = event.target.closest('.role-button');
+        if (roleButton) {
             const role = roleButton.dataset.role;
             const jugadorNombre = modalDetails.querySelector('h3').textContent;
             const jugadorActual = todosLosJugadores.find(j => j.nombre === jugadorNombre);
 
             if (jugadorActual && jugadorActual.descripciones[role]) {
                 const descContainer = document.getElementById('desc-container');
+                const iconoRuta = obtenerRutaIcono(role);
                 descContainer.innerHTML = `
                     <div class="role-content">
-                        <img src="${obtenerRutaIcono(role)}" alt="Ícono del rol" class="role-description-icon">
+                        <img src="${iconoRuta}" alt="Ícono de ${role}" class="role-description-icon">
                         <h4>${role}</h4>
                     </div>
                     <p>${jugadorActual.descripciones[role]}</p>
