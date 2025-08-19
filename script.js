@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Elementos del modal
     const modalOverlay = document.createElement('div');
     modalOverlay.classList.add('modal-overlay');
+    // Se asegura de que el modal esté oculto al crearlo para evitar el problema de visualización
+    modalOverlay.style.display = 'none'; 
     modalOverlay.innerHTML = `
         <div class="modal-content">
             <button class="close-button">&times;</button>
@@ -104,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
         // Se añade la clase 'visible' para mostrar el modal
+        modalOverlay.style.display = 'flex';
         modalOverlay.classList.add('visible');
     }
     
@@ -113,6 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function cerrarModal() {
         // Se elimina la clase 'visible' para ocultar el modal
         modalOverlay.classList.remove('visible');
+        modalOverlay.style.display = 'none';
     }
 
     /**
@@ -210,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Delegación de eventos para los botones de rol dentro del modal
-    modalOverlay.addEventListener('click', (event) => {
+    modalDetails.addEventListener('click', (event) => {
         const roleButton = event.target.closest('.role-button');
         if (roleButton) {
             const role = roleButton.dataset.role;
